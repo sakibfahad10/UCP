@@ -1,9 +1,9 @@
 // app/auth/page.tsx
 
 import { Suspense } from "react"
-// এখানে { AuthForm } ব্যবহার করুন যদি ফাইলে 'export function AuthForm' থাকে
+// Use { AuthForm } here if the file exports 'export function AuthForm'
 import { AuthForm } from "@/components/auth-form" 
-import AuthLoading from "./loading" // অথবা আপনার লোডিং কম্পোনেন্ট
+import AuthLoading from "./loading" // or your loading component
 
 export default function AuthPage() {
   return (

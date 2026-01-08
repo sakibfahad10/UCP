@@ -11,7 +11,7 @@ export default function ContestCard({ contest }: { contest: any }) {
 
   const handleEnterArena = () => {
     setIsEntering(true)
-    // ১.৫ সেকেন্ডের একটি প্রফেশনাল ডিলে জেনারেট করা
+    // Generating a professional delay of 1.5 seconds
     setTimeout(() => {
       router.push(`/contests/${contest.id}/arena`)
     }, 1500)

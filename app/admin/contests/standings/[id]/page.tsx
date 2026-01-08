@@ -14,18 +14,18 @@ export default function ContestStandings({ params }: { params: Promise<{ id: str
 
   useEffect(() => {
     const fetchData = async () => {
-      // ১. কন্টেস্টের প্রবলেমগুলো আনুন
+      // 1. Fetch contest problems
       const { data: contest } = await supabase.from("contests").select("problems").eq("id", id).single()
       const problemList = contest?.problems || []
       setProblems(problemList)
 
-      // ২. লিডারবোর্ড ডাটা এবং স্ট্যাটাস আনুন
+      // 2. Fetch Leaderboard Data and Status
       const { data: stats } = await supabase
         .from("contest_problem_stats")
         .select(`*, profiles(full_name)`)
         .eq("contest_id", id)
 
-      // ডাটা গ্রুপ করা (User wise)
+      // Group Data (User wise)
       const grouped = stats?.reduce((acc: any, curr: any) => {
         if (!acc[curr.user_id]) {
           acc[curr.user_id] = { 

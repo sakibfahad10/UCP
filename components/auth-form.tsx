@@ -45,7 +45,7 @@ export function AuthForm() {
 
         if (data.user) {
           toast.success("Welcome back, Architect!")
-          // সেশন এবং কুকি সিঙ্ক করার জন্য হার্ড রিফ্রেশ সবচেয়ে কার্যকর
+          // Hard refresh is most effective for syncing session and cookies
           window.location.assign("/") 
         }
       } else {
@@ -69,12 +69,12 @@ export function AuthForm() {
 
         if (error) throw error
 
-        // যদি ইমেইল কনফার্মেশন অফ থাকে তবে সরাসরি সেশন আসবে
+        // If email confirmation is off, session will be available directly
         if (data.session) {
           toast.success("Account created successfully!")
           window.location.assign("/")
         } else {
-          // যদি ইমেইল কনফার্মেশন অন থাকে
+          // If email confirmation is on
           toast.info("Registration successful! Please check your email or login.")
           setIsLogin(true)
         }

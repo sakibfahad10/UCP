@@ -21,7 +21,7 @@ export default function AdminContestLobby() {
     async function fetchContests() {
       try {
         setLoading(true)
-        // FIX: 'problems' কলামটি সরাসরি না লিখে রিলেশনশিপ (problems(id)) ব্যবহার করা হয়েছে
+        // FIX: Used relationship (problems(id)) instead of direct 'problems' column
         const { data, error } = await supabase
           .from("contests")
           .select(`
@@ -141,7 +141,7 @@ export default function AdminContestLobby() {
                     <div className="inline-flex items-center gap-2 px-3 py-1 bg-slate-100 rounded-lg">
                       <Database size={10} className="text-slate-400" />
                       <span className="text-[9px] font-black text-slate-600 uppercase">
-                        {/* problems(id) কুয়েরি ব্যবহার করায় এখন contest.problems একটি array হবে */}
+                        {/* contest.problems is now an array because used problems(id) query */}
                         {contest.problems ? contest.problems.length : 0} Tasks
                       </span>
                     </div>

@@ -51,7 +51,7 @@ export default function EditContestPage() {
           description: data.description || "",
           start_time: data.start_time ? new Date(data.start_time).toISOString().slice(0, 16) : "",
           end_time: data.end_time ? new Date(data.end_time).toISOString().slice(0, 16) : "",
-          // ডাটাবেস থেকে আসা jsonb কে এ্যারে হিসেবে নিশ্চিত করা
+          // Ensure jsonb from database is treated as an array
           problems: Array.isArray(data.problems) ? data.problems : [],
           rules: data.rules || {
             penalty_per_wrong_submission: 20,
@@ -76,13 +76,13 @@ export default function EditContestPage() {
     setIsSubmitting(true)
 
     try {
-      // আপনার স্ক্রিনশট অনুযায়ী কলামগুলো সাজানো হয়েছে
+      // Columns arranged according to your screenshot
       const updatePayload = {
         title: formData.title,
         description: formData.description,
         start_time: new Date(formData.start_time).toISOString(),
         end_time: new Date(formData.end_time).toISOString(),
-        // jsonb কলামের জন্য ডাটা পাঠানো
+        // Sending data for jsonb column
         problems: formData.problems, 
         rules: formData.rules
       }
@@ -93,7 +93,7 @@ export default function EditContestPage() {
         .eq("id", id)
 
       if (error) {
-        // যদি এখনও error আসে, তবে বিস্তারিত জানার জন্য console এ JSON ফরম্যাটে দেখা যাবে
+        // If error still persists, check console for detailed JSON error
         console.error("Supabase Detailed Error:", JSON.stringify(error, null, 2))
         throw error
       }

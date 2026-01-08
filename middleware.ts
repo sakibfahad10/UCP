@@ -26,18 +26,18 @@ export async function middleware(request: NextRequest) {
   const { data: { user } } = await supabase.auth.getUser()
   const pathname = request.nextUrl.pathname
 
-  // ১. লগইন থাকলে /auth পেজে ঢুকতে দিবে না
+  // 1. Prevent access to /auth page if already logged in
   if (user && pathname.startsWith('/auth')) {
     return NextResponse.redirect(new URL('/', request.url))
   }
 
-  // ২. এডমিন প্রোটেকশন (Strict Logic)
+  // 2. Admin Protection (Strict Logic)
   if (pathname.startsWith('/admin')) {
     if (!user) {
       return NextResponse.redirect(new URL('/auth', request.url))
     }
 
-    // প্রোফাইল থেকে is_admin চেক করা
+    // Check is_admin from profile
     const { data: profile } = await supabase
       .from('profiles')
       .select('is_admin')
@@ -45,7 +45,7 @@ export async function middleware(request: NextRequest) {
       .single()
 
     if (!profile?.is_admin) {
-      // যদি এডমিন না হয়, তবে তাকে হোমপেজে পাঠিয়ে দিবে
+      // If not admin, redirect to homepage
       return NextResponse.redirect(new URL('/', request.url))
     }
   }

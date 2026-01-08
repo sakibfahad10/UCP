@@ -45,7 +45,7 @@ export default function VSCodeStyleIDE({ params }: { params: Promise<{ id: strin
   const handleAction = async (isSubmit: boolean) => {
     if (!code.trim()) return toast.error("Code is empty!");
     
-    // ১. ইউজার সেশন চেক
+    // 1. Check User Session
     const { data: { user } } = await supabase.auth.getUser();
     if (isSubmit && !user) {
       return toast.error("Please login to submit your code!");
@@ -55,7 +55,7 @@ export default function VSCodeStyleIDE({ params }: { params: Promise<{ id: strin
     setActiveTab("output");
     
     try {
-      // ২. API কল
+      // 2. API Call
       const res = await fetch('/api/run', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -68,21 +68,21 @@ export default function VSCodeStyleIDE({ params }: { params: Promise<{ id: strin
 
       const data = await res.json();
       
-      // ৩. রেজাল্ট কম্পারিজন (AC বা WA নির্ধারণ)
+      // 3. Result Comparison (Determine AC or WA)
       const isCorrect = data.output?.trim() === problem.sample_output?.trim();
       const finalStatus = isCorrect ? "AC" : "WA"; 
 
-      // UI এর জন্য ডিসপ্লে স্ট্যাটাস
+      // Display Status for UI
       setOutput({ ...data, displayStatus: isCorrect ? "Accepted" : "Wrong Answer" });
 
       if (isSubmit) {
-        // ৪. ডাটাবেসে সাবমিশন সেভ করা (Constraint অনুযায়ী AC/WA পাঠানো হচ্ছে)
+        // 4. Save submission to database (Sending AC/WA per constraint)
         const { error: subError } = await supabase.from('submissions').insert({ 
           problem_id: problemId, 
           user_id: user?.id,
           code: code, 
           language: language, 
-          status: finalStatus, // ডাটাবেস শুধুমাত্র এটি গ্রহণ করবে
+          status: finalStatus, // Database only accepts this
           score: isCorrect ? 10 : 0 
         });
 
@@ -177,7 +177,7 @@ export default function VSCodeStyleIDE({ params }: { params: Promise<{ id: strin
                 scrollBeyondLastLine: false,
                 lineNumbers: "on",
                 padding: { top: 10 },
-                backgroundColor: "#1e1e1e",
+
                 automaticLayout: true,
               }}
             />
@@ -190,7 +190,7 @@ export default function VSCodeStyleIDE({ params }: { params: Promise<{ id: strin
               <button onClick={() => setActiveTab("output")} className={`px-4 py-2 text-[10px] font-bold uppercase tracking-widest border-b-2 transition-all ${activeTab === "output" ? "border-blue-500 text-white" : "border-transparent text-[#666666] hover:text-[#999999]"}`}>Output</button>
               <div className="ml-auto pr-4 flex items-center gap-4 text-[#666666]">
                 {output && <span className="text-[10px] font-mono"><Cpu size={10} className="inline mr-1" /> {output.cpuTime || 0}s</span>}
-                <RotateCcw size={12} className="cursor-pointer hover:text-white transition-colors" title="Reset Boilerplate" onClick={() => setDefaultCode(language)} />
+                <RotateCcw size={12} className="cursor-pointer hover:text-white transition-colors" onClick={() => setDefaultCode(language)} />
               </div>
             </div>
 

@@ -9,7 +9,7 @@ export async function executeCode(code: string, language: string, problemId?: st
 
     if (!user) throw new Error("Unauthorized")
 
-    // ১. JDoodle API তে কোড পাঠানো
+    // 1. Send code to JDoodle API
     const response = await fetch("https://api.jdoodle.com/v1/execute", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -25,14 +25,14 @@ export async function executeCode(code: string, language: string, problemId?: st
     const result = await response.json()
     const output = result.output?.trim()
 
-    // ২. স্যাম্পল আউটপুটের সাথে মিলানো
+    // 2. Match with Sample Output
     let status = "pending"
     if (problemId) {
       const { data: problem } = await supabase.from("problems").select("sample_output").eq("id", problemId).single()
       status = output === problem?.sample_output?.trim() ? "accepted" : "wrong_answer"
     }
 
-    // ৩. সাবমিশন টেবিলে সেভ করা (competition_id -> contest_id)
+    // 3. Save to submissions table (competition_id -> contest_id)
     const { error: subError } = await supabase.from("submissions").insert({
       problem_id: problemId,
       user_id: user.id,

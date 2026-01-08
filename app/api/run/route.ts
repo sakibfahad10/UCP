@@ -11,7 +11,7 @@ export async function POST(req: Request) {
         clientId: process.env.NEXT_PUBLIC_JDOODLE_CLIENT_ID,
         clientSecret: process.env.NEXT_PUBLIC_JDOODLE_CLIENT_SECRET || process.env.NEXT_JDOODLE_CLIENT_SECRET,
         script: body.code,
-        language: body.language, // যেমন: 'cpp17', 'python3', 'java'
+        language: body.language, // e.g.: 'cpp17', 'python3', 'java'
         versionIndex: "0",
         stdin: body.input
       })

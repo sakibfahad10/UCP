@@ -10,7 +10,7 @@ import {
 } from "lucide-react"
 import Link from "next/link"
 import { toast } from "sonner"
-// আমি ধরে নিচ্ছি আপনি components/admin/problem-picker.tsx ফাইলটি তৈরি করেছেন
+// Assuming you created components/admin/problem-picker.tsx
 import ProblemPicker from "@/components/admin/problem-picker"
 
 export default function NewContestPage() {
@@ -23,7 +23,7 @@ export default function NewContestPage() {
     description: "",
     start_time: "",
     end_time: "",
-    problems: [] as string[], // এখানে সিলেক্টেড প্রবলেম আইডিগুলো থাকবে
+    problems: [] as string[], // Selected problem IDs will be here
     rules: {
       penalty_per_wrong_submission: 20,
       show_leaderboard_immediately: true,

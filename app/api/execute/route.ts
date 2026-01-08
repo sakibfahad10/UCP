@@ -6,25 +6,25 @@ export async function POST(req: Request) {
     const { script, language, problemId, contestId, userId } = await req.json()
     const supabase = await createClient()
 
-    // ১. ডাটাবেস থেকে প্রবলেমের ডাটা আনা (Time limit, Memory limit, Sample Output)
+    // 1. Fetch problem data from database (Time limit, Memory limit, Sample Output)
     const { data: problem } = await supabase
       .from("problems")
       .select("*")
       .eq("id", problemId)
       .single()
 
-    // ২. রিকোয়ারমেন্ট ৮: অ্যান্টি-চিটিং (Rate Limiting)
+    // 2. Requirement 8: Anti-cheating (Rate Limiting)
     const { count: recentSubmissions } = await supabase
       .from("submissions")
       .select("*", { count: 'exact', head: true })
       .eq("user_id", userId)
-      .gt("created_at", new Date(Date.now() - 30000).toISOString()) // ৩০ সেকেন্ডে ১টার বেশি না
+      .gt("created_at", new Date(Date.now() - 30000).toISOString()) // Not more than 1 in 30 seconds
 
     if (recentSubmissions && recentSubmissions > 0) {
       return NextResponse.json({ error: "Too many attempts. Wait 30s." }, { status: 429 })
     }
 
-    // ৩. রিকোয়ারমেন্ট ৩ & ৪: JDoodle এ কোড পাঠানো
+    // 3. Requirement 3 & 4: Sending code to JDoodle
     const response = await fetch("https://api.jdoodle.com/v1/execute", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -40,7 +40,7 @@ export async function POST(req: Request) {
 
     const result = await response.json()
 
-    // ৪. রিকোয়ারমেন্ট ৪: Verdict System Logic
+    // 4. Requirement 4: Verdict System Logic
     let verdict = "WA" // Wrong Answer default
     const actualOutput = result.output?.trim()
     const expectedOutput = problem.sample_output?.trim()
@@ -53,8 +53,8 @@ export async function POST(req: Request) {
       verdict = "AC" // Accepted
     }
 
-    // ৫. রিকোয়ারমেন্ট ৫ & ৬: Scoring & Penalty (ICPC Style)
-    // আমরা আগের সব ভুল সাবমিশন কাউন্ট করব পেনাল্টি যোগ করার জন্য
+    // 5. Requirement 5 & 6: Scoring & Penalty (ICPC Style)
+    // We will count all previous wrong submissions to add penalty
     const { count: wrongAttempts } = await supabase
       .from("submissions")
       .select("*", { count: 'exact', head: true })
@@ -62,7 +62,7 @@ export async function POST(req: Request) {
       .eq("problem_id", problemId)
       .eq("verdict", "WA")
 
-    // সাবমিশন সেভ করা
+    // Save Submission
     const { data: submission, error: subError } = await supabase
       .from("submissions")
       .insert({

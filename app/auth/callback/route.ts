@@ -12,7 +12,7 @@ export async function GET(request: Request) {
     if (!error) {
       const { data: { user } } = await supabase.auth.getUser()
       
-      // প্রোফাইল চেক করে রোল অনুযায়ী রিডাইরেক্ট করা
+      // Check profile and redirect based on role
       const { data: profile } = await supabase
         .from('profiles')
         .select('is_admin')
@@ -20,10 +20,10 @@ export async function GET(request: Request) {
         .single()
 
       if (profile?.is_admin) {
-        return NextResponse.redirect(`${origin}/admin/contests`) // এডমিনদের জন্য
+        return NextResponse.redirect(`${origin}/admin/contests`) // For Admins
       }
       
-      return NextResponse.redirect(`${origin}/contests`) // সাধারণ ইউজারদের জন্য
+      return NextResponse.redirect(`${origin}/contests`) // For Standard Users
     }
   }
 

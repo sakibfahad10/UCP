@@ -12,7 +12,7 @@ export default function ContestsContent() {
   const [loading, setLoading] = useState(true)
   const supabase = createClient()
 
-  // ১. ডাটাবেস থেকে কন্টেস্ট ফেচ করা
+  // 1. Fetch contests from database
   useEffect(() => {
     async function fetchContests() {
       setLoading(true)
@@ -32,7 +32,7 @@ export default function ContestsContent() {
     fetchContests()
   }, [supabase])
 
-  // ২. ফিল্টারিং লজিক (Search & Tabs)
+  // 2. Filtering Logic (Search & Tabs)
   const filteredContests = contests.filter(contest => {
     const matchesSearch = contest.title.toLowerCase().includes(searchTerm.toLowerCase())
     const now = new Date()

@@ -6,7 +6,7 @@ export async function POST(req: Request) {
     const { submissionId } = await req.json()
     const supabase = await createClient()
 
-    // ১. সাবমিশন এবং সংশ্লিষ্ট প্রবলেমের টেস্টকেসগুলো নিয়ে আসা
+    // 1. Fetching submission and related problem testcases
     const { data: sub, error: subError } = await supabase
       .from('submissions')
       .select('*, problems(testcases)')
@@ -27,7 +27,7 @@ export async function POST(req: Request) {
     let maxMemory = 0
     let lastOutput = ""
 
-    // ২. প্রতিটি টেস্টকেসের জন্য লুপ চালিয়ে চেক করা
+    // 2. Loop through each testcase to check
     for (let i = 0; i < testcases.length; i++) {
       const tc = testcases[i]
 
@@ -46,7 +46,7 @@ export async function POST(req: Request) {
 
       const result = await response.json()
 
-      // এরর হ্যান্ডলিং (যেমন: কোটা শেষ বা নেটওয়ার্ক এরর)
+      // Error Handling (e.g.: Quota exceeded or Network error)
       if (result.statusCode !== 200 && !result.output) {
         overallVerdict = "Internal Error"
         break
@@ -55,25 +55,25 @@ export async function POST(req: Request) {
       const actualOutput = result.output?.trim()
       const expectedOutput = tc.output?.trim()
 
-      // মেট্রিক্স আপডেট
+      // Metric Update
       maxTime = Math.max(maxTime, parseFloat(result.cpuTime || 0))
       maxMemory = Math.max(maxMemory, parseInt(result.memory || 0))
       lastOutput = result.output
 
-      // ভার্ডিক্ট লজিক
+      // Verdict Logic
       if (actualOutput !== expectedOutput) {
         overallVerdict = "Wrong Answer"
-        break // একটি ফেল করলেই লুপ বন্ধ
+        break // Break loop if one fails
       }
       
-      // টাইম লিমিট চেক (যদি ১ সেকেন্ডের বেশি লাগে)
+      // Time Limit Check (if more than 1 second)
       if (parseFloat(result.cpuTime) > 1.0) {
         overallVerdict = "Time Limit Exceeded"
         break
       }
     }
 
-    // ৩. ডাটাবেসে ফাইনাল রেজাল্ট আপডেট
+    // 3. Update final result in database
     const { error: updateError } = await supabase
       .from('submissions')
       .update({
