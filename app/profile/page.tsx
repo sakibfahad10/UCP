@@ -9,6 +9,12 @@ import {
   User as UserIcon, Calendar, Zap, ChevronRight,
   ExternalLink, Github, Globe
 } from "lucide-react"
+import EditProfileDialog from "@/components/edit-profile-dialog"
+import ActivityHeatmap from "@/components/activity-heatmap"
+import LanguageStats from "@/components/language-stats"
+import SubmissionHistory from "@/components/submission-history"
+import BadgesList from "@/components/badges-list"
+import UserAvatar from "@/components/user-avatar"
 
 export default function ProfilePage() {
   const { user, isAuthenticated, isLoading, logout } = useAuth()
@@ -29,7 +35,6 @@ export default function ProfilePage() {
   const fullName = user.display_name || "User"
   const username = user.username || "username"
   const rankPoints = user.rank_points || 0
-  const avatar = user.avatar_url || `https://api.dicebear.com/7.x/avataaars/svg?seed=${user.email}`
 
   return (
     <div className="min-h-screen bg-[#F8FAFC]">
@@ -40,14 +45,13 @@ export default function ProfilePage() {
         <div className="max-w-6xl mx-auto px-6">
           <div className="flex flex-col md:flex-row items-center md:items-end gap-8">
             <div className="relative">
-              <img 
-                src={avatar} 
-                alt={fullName} 
-                className="w-40 h-40 rounded-3xl border-4 border-slate-800 bg-slate-800 object-cover shadow-2xl"
-              />
-              <div className="absolute -bottom-2 -right-2 bg-orange-500 p-2 rounded-xl shadow-lg">
-                <Zap className="w-5 h-5 text-white fill-current" />
-              </div>
+            <UserAvatar 
+              avatarUrl={user.avatar_url}
+              name={fullName}
+              size="xl"
+              className="w-40 h-40 rounded-3xl border-4 border-slate-800 shadow-2xl"
+            />
+
             </div>
             
             <div className="flex-1 text-center md:text-left">
@@ -68,7 +72,7 @@ export default function ProfilePage() {
                 </div>
                 <div className="flex items-center gap-2 text-slate-300 bg-white/5 px-4 py-2 rounded-xl backdrop-blur-sm border border-white/10">
                   <Calendar className="w-4 h-4 text-blue-500" />
-                  <span>Joined Nov 2024</span>
+                  <span>Joined {new Date(user.created_at).toLocaleDateString(undefined, { month: 'short', year: 'numeric' })}</span>
                 </div>
               </div>
             </div>
@@ -77,9 +81,14 @@ export default function ProfilePage() {
               <button className="p-3 bg-white/5 hover:bg-white/10 text-white rounded-xl border border-white/10 transition-all">
                 <Settings className="w-5 h-5" />
               </button>
-              <button className="px-6 py-3 bg-orange-500 hover:bg-orange-600 text-white font-bold rounded-xl shadow-lg shadow-orange-500/20 transition-all">
-                Edit Profile
-              </button>
+              <EditProfileDialog 
+                user={user} 
+                trigger={
+                  <button className="px-6 py-3 bg-orange-500 hover:bg-orange-600 text-white font-bold rounded-xl shadow-lg shadow-orange-500/20 transition-all">
+                    Edit Profile
+                  </button>
+                } 
+              />
             </div>
           </div>
         </div>
@@ -110,9 +119,7 @@ export default function ProfilePage() {
             <div className="bg-white rounded-3xl p-8 shadow-sm border border-slate-100">
               <h3 className="text-slate-900 font-bold mb-6">Languages</h3>
               <div className="space-y-4">
-                <LanguageProgress label="C++" percent={85} color="bg-blue-500" />
-                <LanguageProgress label="Python" percent={40} color="bg-yellow-500" />
-                <LanguageProgress label="Java" percent={25} color="bg-red-500" />
+                <LanguageStats userId={user.id} />
               </div>
             </div>
           </div>
@@ -148,26 +155,13 @@ export default function ProfilePage() {
               <div className="p-8">
                 {activeTab === "overview" && (
                   <div className="space-y-8">
-                    {/* Activity Heatmap Placeholder */}
+                    {/* Activity Heatmap */}
                     <div>
                       <h4 className="font-bold text-slate-900 mb-4 flex items-center justify-between">
                         Activity Map
                         <span className="text-xs font-medium text-slate-400">Past 6 months</span>
                       </h4>
-                      <div className="flex gap-1 overflow-hidden">
-                        {[...Array(30)].map((_, i) => (
-                          <div key={i} className="flex-1 space-y-1">
-                            {[...Array(7)].map((_, j) => (
-                              <div 
-                                key={j} 
-                                className={`aspect-square rounded-sm ${
-                                  Math.random() > 0.7 ? "bg-orange-500" : "bg-slate-100"
-                                }`}
-                              />
-                            ))}
-                          </div>
-                        ))}
-                      </div>
+                      <ActivityHeatmap userId={user.id} />
                     </div>
 
                     {/* Recent Activities */}
@@ -181,6 +175,14 @@ export default function ProfilePage() {
                     </div>
                   </div>
                 )}
+                
+                {activeTab === "submissions" && (
+                  <SubmissionHistory userId={user.id} />
+                )}
+
+                {activeTab === "badges" && (
+                  <BadgesList userId={user.id} />
+                )}
               </div>
             </div>
           </div>
@@ -192,19 +194,7 @@ export default function ProfilePage() {
 }
 
 // UI Components
-function LanguageProgress({ label, percent, color }: any) {
-  return (
-    <div className="space-y-1.5">
-      <div className="flex justify-between text-xs font-bold">
-        <span className="text-slate-700">{label}</span>
-        <span className="text-slate-400">{percent}%</span>
-      </div>
-      <div className="h-1.5 w-full bg-slate-100 rounded-full overflow-hidden">
-        <div className={`h-full ${color} rounded-full`} style={{ width: `${percent}%` }}></div>
-      </div>
-    </div>
-  )
-}
+
 
 function QuickStat({ label, value, sub }: any) {
   return (

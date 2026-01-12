@@ -4,7 +4,7 @@ import { useState } from "react"
 import { createClient } from "@/lib/supabase/client"
 import { useRouter } from "next/navigation"
 import { toast } from "sonner"
-import { User, Mail, Lock, Eye, EyeOff, Loader2 } from "lucide-react"
+import { User, Mail, Lock, Eye, EyeOff, Loader2, IdCard } from "lucide-react"
 
 export function AuthForm() {
   const [isLogin, setIsLogin] = useState(true)
@@ -14,6 +14,7 @@ export function AuthForm() {
   
   const [formData, setFormData] = useState({
     fullName: "",
+    universityId: "",
     email: "",
     password: "",
     confirmPassword: "",
@@ -63,6 +64,7 @@ export function AuthForm() {
             data: {
               full_name: formData.fullName,
               display_name: formData.fullName,
+              university_id: formData.universityId,
             }
           }
         })
@@ -136,6 +138,24 @@ export function AuthForm() {
                   value={formData.fullName}
                   onChange={handleChange}
                   placeholder="ARCHITECT NAME"
+                  required
+                  className="w-full pl-10 pr-4 py-3.5 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-orange-500/20 focus:border-orange-500 outline-none transition-all text-sm font-bold placeholder:text-slate-300"
+                />
+              </div>
+            </div>
+          )}
+
+          {!isLogin && (
+            <div className="space-y-1 group">
+              <label className="text-[9px] font-black uppercase text-slate-500 ml-1 tracking-widest">Student / Teacher ID</label>
+              <div className="relative">
+                <IdCard className="absolute left-3 top-3.5 w-4 h-4 text-slate-400 group-focus-within:text-orange-500 transition-colors" />
+                <input
+                  type="text"
+                  name="universityId"
+                  value={formData.universityId}
+                  onChange={handleChange}
+                  placeholder="011233000"
                   required
                   className="w-full pl-10 pr-4 py-3.5 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-orange-500/20 focus:border-orange-500 outline-none transition-all text-sm font-bold placeholder:text-slate-300"
                 />

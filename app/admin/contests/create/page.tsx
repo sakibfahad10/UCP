@@ -23,6 +23,10 @@ export default function NewContestPage() {
     description: "",
     start_time: "",
     end_time: "",
+    registration_start_time: "",
+    registration_end_time: "",
+    max_participants: 0,
+    allow_teams: false,
     problems: [] as string[], // Selected problem IDs will be here
     rules: {
       penalty_per_wrong_submission: 20,
@@ -126,33 +130,62 @@ export default function NewContestPage() {
           />
         </div>
 
-        {/* --- Section 2: Time Window --- */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          <div className="bg-white border border-slate-100 p-8 rounded-[2.5rem] shadow-sm">
-            <div className="flex items-center gap-3 mb-6">
-              <Calendar size={18} className="text-orange-500" />
-              <h3 className="text-sm font-black uppercase tracking-widest text-slate-900">Start Sequence</h3>
-            </div>
-            <input 
-              required
-              type="datetime-local" 
-              className="w-full px-6 py-4 bg-slate-50 border-none rounded-2xl text-sm font-black focus:ring-2 focus:ring-orange-500/20 outline-none uppercase"
-              onChange={(e) => setFormData({...formData, start_time: e.target.value})}
-            />
-          </div>
+        <div className="bg-white border border-slate-100 p-8 rounded-[2.5rem] shadow-sm space-y-8">
+           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+              <div>
+                <div className="flex items-center gap-3 mb-6">
+                  <Calendar size={18} className="text-orange-500" />
+                  <h3 className="text-sm font-black uppercase tracking-widest text-slate-900">Start Sequence</h3>
+                </div>
+                <input 
+                  required
+                  type="datetime-local" 
+                  className="w-full px-6 py-4 bg-slate-50 border-none rounded-2xl text-sm font-black focus:ring-2 focus:ring-orange-500/20 outline-none uppercase"
+                  onChange={(e) => setFormData({...formData, start_time: e.target.value})}
+                />
+              </div>
 
-          <div className="bg-white border border-slate-100 p-8 rounded-[2.5rem] shadow-sm">
-            <div className="flex items-center gap-3 mb-6">
-              <Clock size={18} className="text-orange-500" />
-              <h3 className="text-sm font-black uppercase tracking-widest text-slate-900">End Sequence</h3>
-            </div>
-            <input 
-              required
-              type="datetime-local" 
-              className="w-full px-6 py-4 bg-slate-50 border-none rounded-2xl text-sm font-black focus:ring-2 focus:ring-orange-500/20 outline-none uppercase"
-              onChange={(e) => setFormData({...formData, end_time: e.target.value})}
-            />
-          </div>
+              <div>
+                <div className="flex items-center gap-3 mb-6">
+                  <Clock size={18} className="text-orange-500" />
+                  <h3 className="text-sm font-black uppercase tracking-widest text-slate-900">End Sequence</h3>
+                </div>
+                <input 
+                  required
+                  type="datetime-local" 
+                  className="w-full px-6 py-4 bg-slate-50 border-none rounded-2xl text-sm font-black focus:ring-2 focus:ring-orange-500/20 outline-none uppercase"
+                  onChange={(e) => setFormData({...formData, end_time: e.target.value})}
+                />
+              </div>
+           </div>
+
+           <div className="h-[1px] bg-slate-100 w-full" />
+
+           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+              <div>
+                <div className="flex items-center gap-3 mb-6">
+                  <Calendar size={18} className="text-blue-500" />
+                  <h3 className="text-xs font-black uppercase tracking-widest text-slate-900">Registration Open</h3>
+                </div>
+                <input 
+                  type="datetime-local" 
+                  className="w-full px-6 py-4 bg-blue-50/50 border-none rounded-2xl text-xs font-black focus:ring-2 focus:ring-blue-500/20 outline-none uppercase text-blue-900"
+                  onChange={(e) => setFormData({...formData, registration_start_time: e.target.value})}
+                />
+              </div>
+
+              <div>
+                <div className="flex items-center gap-3 mb-6">
+                  <Clock size={18} className="text-blue-500" />
+                  <h3 className="text-xs font-black uppercase tracking-widest text-slate-900">Registration Close</h3>
+                </div>
+                <input 
+                  type="datetime-local" 
+                  className="w-full px-6 py-4 bg-blue-50/50 border-none rounded-2xl text-xs font-black focus:ring-2 focus:ring-blue-500/20 outline-none uppercase text-blue-900"
+                  onChange={(e) => setFormData({...formData, registration_end_time: e.target.value})}
+                />
+              </div>
+           </div>
         </div>
 
         {/* --- Section 3: Advanced Rules --- */}

@@ -4,6 +4,7 @@ import { usePathname } from "next/navigation"
 import { Bell, LogOut, ShieldCheck, X, LayoutGrid } from "lucide-react"
 import { useAuth } from "@/lib/auth-context" // Ensuring correct path to avoid errors
 import { useState, useEffect, useRef } from "react" 
+import UserAvatar from "@/components/user-avatar" 
 
 export default function Header() {
   const { user, isAuthenticated, logout, isLoading } = useAuth()
@@ -30,7 +31,6 @@ export default function Header() {
   ]
 
   const displayName = user?.display_name || user?.full_name || user?.email?.split('@')[0] || "Architect"
-  const avatar = user?.avatar_url || `https://api.dicebear.com/7.x/avataaars/svg?seed=${user?.id || 'default'}`
 
   const notifications = [
     { id: 1, text: "Your submission for 'Two Sum' was accepted!", time: "2m ago" },
@@ -148,10 +148,11 @@ export default function Header() {
                       {user?.is_admin ? "STAFF" : `RANK ${user?.rank_points || 0}`}
                     </p>
                   </div>
-                  <img 
-                    src={avatar} 
-                    className="w-9 h-9 rounded-xl border border-white/10 bg-slate-800 object-cover" 
-                    alt="profile" 
+                  <UserAvatar 
+                    avatarUrl={user?.avatar_url}
+                    name={displayName}
+                    size="sm"
+                    className="w-9 h-9 rounded-xl border border-white/10"
                   />
                 </Link>
 

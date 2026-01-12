@@ -23,6 +23,7 @@ export default function UserProblemListPage() {
       const { data } = await supabase
         .from("problems")
         .select("*")
+        .eq("hidden", false) // Filter hidden problems
         .order("created_at", { ascending: false })
       
       setProblems(data || [])
