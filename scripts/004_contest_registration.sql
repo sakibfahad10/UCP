@@ -41,5 +41,8 @@ CREATE POLICY "Users can edit own registration"
 ON public.registrations FOR UPDATE
 USING (auth.uid() = user_id);
 
--- 4. Reload Schema
+-- 4. Permissions
+GRANT ALL ON TABLE public.registrations TO anon, authenticated, service_role;
+
+-- 5. Reload Schema
 NOTIFY pgrst, 'reload schema';
