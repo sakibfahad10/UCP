@@ -132,8 +132,8 @@ export default function EditProfileDialog({ user, trigger }: EditProfileDialogPr
       console.log('Public URL:', publicUrl)
       return publicUrl
     } catch (error: any) {
-      console.error('Avatar upload failed:', error)
-      toast.error(error.message || "Failed to upload image. Make sure the 'avatars' storage bucket exists in Supabase.")
+      console.error('DEBUG: Avatar upload failed:', error)
+      toast.error(error.message || "Failed to upload image")
       return null
     } finally {
       setUploading(false)
@@ -152,6 +152,7 @@ export default function EditProfileDialog({ user, trigger }: EditProfileDialogPr
       toast.success("Avatar removed")
       setPreviewUrl(null)
       setSelectedFile(null)
+      await refreshUser()
       router.refresh()
     } catch (error: any) {
       toast.error(error.message || "Failed to remove avatar")
@@ -169,22 +170,46 @@ export default function EditProfileDialog({ user, trigger }: EditProfileDialogPr
         }
       }
 
+      console.log('DEBUG: Updating profile with data:', { ...data, avatar_url: avatarUrl })
+      
+      // Sanitize data: remove undefined/null values to avoid issues with Supabase updates
+      const updatePayload: any = {
+        display_name: data.display_name,
+        full_name: data.full_name || null,
+        bio: data.bio || null,
+        location: data.location || null,
+        website: data.website || null,
+        avatar_url: avatarUrl
+      }
+
       // Update profile
-      const { error } = await supabase
+      const { data: updateData, error, count } = await supabase
         .from("profiles")
-        .update({
-          ...data,
-          avatar_url: avatarUrl
-        })
+        .update(updatePayload)
         .eq("id", user.id)
+        .select()
 
-      if (error) throw error
+      console.log('DEBUG: Update response:', { updateData, error, count })
 
+      if (error) {
+        console.error('DEBUG: Profile update error:', error)
+        throw new Error(error.message || "Failed to update profile database record")
+      }
+      
+      if (!updateData || updateData.length === 0) {
+        console.warn('DEBUG: No rows updated. This might mean the profile record is missing.')
+        throw new Error("Profile record not found. Please contact support.")
+      }
+      
+      // Force refresh auth context first
+      await refreshUser()
+      
       toast.success("Profile updated successfully")
       setOpen(false)
       setSelectedFile(null)
       setPreviewUrl(null)
-      await refreshUser()
+      
+      // Then refresh the server components
       router.refresh()
     } catch (error: any) {
       toast.error(error.message || "Failed to update profile")

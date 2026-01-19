@@ -20,16 +20,30 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
           .from("profiles")
           .select("*")
           .eq("id", session.user.id)
-          .single()
+          .maybeSingle()
 
         if (error) {
-          console.error("Profile fetch error:", error.message)
-          // Set session user even if profile not found to keep logged in
+          console.error("DEBUG: AuthContext: Profile fetch error:", error.message)
+          setUser(session.user)
+        } else if (!profile) {
+          console.log("DEBUG: AuthContext: No profile found for data:", session.user.id)
           setUser(session.user)
         } else {
-          // Merging session user and profile data (including is_admin)
-          const fullUser = { ...session.user, ...profile }
-          console.log("Logged in user data with role:", fullUser) // Debugging: Check console
+          // Merging session user, user_metadata, and profile data
+          // Profile data (source of truth) overrides metadata and session fields
+          const fullUser = { 
+            ...session.user, 
+            ...(session.user.user_metadata || {}), 
+            ...profile 
+          }
+          console.log("DEBUG: AuthContext: Profile merged for user", fullUser.id)
+          console.log("DEBUG: AuthContext: Merged data summary:", {
+            id: fullUser.id,
+            email: fullUser.email,
+            display_name: fullUser.display_name,
+            username: fullUser.username,
+            avatar_url: fullUser.avatar_url
+          })
           setUser(fullUser)
         }
       } else {

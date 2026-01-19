@@ -62,7 +62,7 @@ export default function ContestsContent() {
             <div className="mb-8">
               <div className="flex items-center gap-3 mb-4">
                 <Trophy className="w-8 h-8 text-orange-500" />
-                <h1 className="text-4xl font-black text-gray-900 uppercase italic tracking-tighter">Arena Contests</h1>
+                <h1 className="text-4xl font-black text-gray-900 uppercase  tracking-tighter">Contests</h1>
               </div>
               <p className="text-gray-600 text-sm font-medium">Join the battle and prove your coding skills.</p>
             </div>

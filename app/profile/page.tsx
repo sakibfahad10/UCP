@@ -61,8 +61,8 @@ export default function ProfilePage() {
                   Expert
                 </span>
               </div>
-              <p className="text-slate-400 flex items-center justify-center md:justify-start gap-2 mb-6">
-                @{username} • UIU Student
+              <p className="text-slate-400 flex items-center justify-center md:justify-start gap-2 mb-6 uppercase font-bold text-[10px] tracking-widest">
+                @{username} {user.location && `• ${user.location}`}
               </p>
               
               <div className="flex flex-wrap justify-center md:justify-start gap-4">
@@ -104,14 +104,25 @@ export default function ProfilePage() {
                 <UserIcon className="w-5 h-5 text-orange-500" /> Bio
               </h3>
               <p className="text-slate-600 text-sm leading-relaxed mb-6">
-                Passionate competitive programmer from UIU. Specialized in Data Structures and Algorithms. Dreaming to be a Red Coder!
+                {user.bio || "No bio available yet. Click 'Edit Profile' to add one!"}
               </p>
               <div className="space-y-4">
+                {user.website ? (
+                  <a 
+                    href={user.website.startsWith('http') ? user.website : `https://${user.website}`} 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    className="flex items-center gap-3 text-slate-500 text-sm hover:text-orange-500 transition-colors"
+                  >
+                    <Globe className="w-4 h-4" /> <span>{user.website.replace(/^https?:\/\//, '')}</span>
+                  </a>
+                ) : (
+                  <div className="flex items-center gap-3 text-slate-400 text-sm italic">
+                    <Globe className="w-4 h-4" /> <span>No website added</span>
+                  </div>
+                )}
                 <div className="flex items-center gap-3 text-slate-500 text-sm">
-                  <Github className="w-4 h-4" /> <span>github.com/coder</span>
-                </div>
-                <div className="flex items-center gap-3 text-slate-500 text-sm">
-                  <Globe className="w-4 h-4" /> <span>portfolio.dev</span>
+                  <Github className="w-4 h-4" /> <span>github.com/{username}</span>
                 </div>
               </div>
             </div>
