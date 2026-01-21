@@ -63,11 +63,14 @@ export default function VSCodeStyleIDE({ params }: { params: Promise<{ id: strin
         return;
       }
       
-      const displayStatus = 
-        result.verdict === "AC" ? "Accepted" : 
-        result.verdict === "WA" ? "Wrong Answer" : 
-        result.verdict === "TLE" ? "Time Limit Exceeded" : 
-        result.verdict === "CE" ? "Compilation Error" : "Error";
+      // For Run mode (no verdict), just show output
+      // For Submit mode, show verdict
+      const displayStatus = result.verdict
+        ? (result.verdict === "AC" ? "Accepted" : 
+           result.verdict === "WA" ? "Wrong Answer" : 
+           result.verdict === "TLE" ? "Time Limit Exceeded" : 
+           result.verdict === "CE" ? "Compilation Error" : "Error")
+        : null; // No status for Run mode
 
       setOutput({ 
         output: result.output, 
@@ -80,6 +83,8 @@ export default function VSCodeStyleIDE({ params }: { params: Promise<{ id: strin
         result.verdict === "AC" 
           ? toast.success("Submission Accepted!") 
           : toast.error(`Submission Failed: ${displayStatus}`);
+      } else {
+        toast.success("Code executed successfully!");
       }
     } catch (e) { 
       toast.error("Execution engine unreachable."); 
@@ -198,10 +203,12 @@ export default function VSCodeStyleIDE({ params }: { params: Promise<{ id: strin
                     </div>
                   ) : output ? (
                     <div className="animate-in fade-in slide-in-from-bottom-2">
-                      <div className={`text-xs font-black mb-3 flex items-center gap-2 ${output.displayStatus === "Accepted" ? "text-green-500" : "text-red-500"}`}>
-                        {output.displayStatus === "Accepted" ? <CheckCircle size={14} /> : <XCircle size={14} />}
-                        {output.displayStatus}
-                      </div>
+                      {output.displayStatus && (
+                        <div className={`text-xs font-black mb-3 flex items-center gap-2 ${output.displayStatus === "Accepted" ? "text-green-500" : "text-red-500"}`}>
+                          {output.displayStatus === "Accepted" ? <CheckCircle size={14} /> : <XCircle size={14} />}
+                          {output.displayStatus}
+                        </div>
+                      )}
                       <div className="text-[9px] text-slate-500 mb-1 uppercase font-black tracking-widest">Stdout:</div>
                       <pre className="text-xs text-[#dcdcdc] bg-[#1e1e1e] p-3 rounded border border-[#333333] whitespace-pre-wrap">{output.output || "No output."}</pre>
                     </div>
