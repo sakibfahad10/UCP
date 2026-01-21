@@ -35,8 +35,8 @@ export async function POST(req: Request) {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          clientId: process.env.NEXT_PUBLIC_JDOODLE_CLIENT_ID,
-          clientSecret: process.env.NEXT_JDOODLE_CLIENT_SECRET,
+          clientId: process.env.NEXT_PUBLIC_JDOODLE_CLIENT_ID || process.env.JDOODLE_CLIENT_ID,
+          clientSecret: process.env.NEXT_JDOODLE_CLIENT_SECRET || process.env.JDOODLE_CLIENT_SECRET || process.env.NEXT_PUBLIC_JDOODLE_CLIENT_SECRET,
           script: sub.code,
           language: sub.language,
           versionIndex: "0",
