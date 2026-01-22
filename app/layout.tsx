@@ -4,7 +4,7 @@ import { Geist, Geist_Mono } from "next/font/google"
 import { Analytics } from "@vercel/analytics/next"
 import "./globals.css"
 import { AuthProvider } from "@/lib/auth-context"
-import { Toaster } from "sonner" // সাকসেস/এরর মেসেজ দেখানোর জন্য
+import { Toaster } from "sonner" // For showing success/error messages
 
 const _geist = Geist({ subsets: ["latin"] })
 const _geistMono = Geist_Mono({ subsets: ["latin"] })
@@ -30,7 +30,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body className="antialiased" suppressHydrationWarning>
         <AuthProvider>
           {children}
-          {/* Toaster এখানে যোগ করা হয়েছে যাতে AuthForm থেকে toast.success কাজ করে */}
+          {/* Toaster added here so toast.success works from AuthForm */}
           <Toaster position="top-center" richColors />
         </AuthProvider>
         <Analytics />

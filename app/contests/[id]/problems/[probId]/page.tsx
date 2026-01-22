@@ -30,18 +30,18 @@ export default function ProblemArena() {
     setOutput("Judging...")
 
     try {
-      // ১. JDoodle এ কোড পাঠানো
+      // 1. Send code to JDoodle
       const res = await fetch('/api/execute', {
         method: 'POST',
         body: JSON.stringify({ script: code, language, stdin: problem.sample_input })
       })
       const result = await res.json()
       
-      // ২. রেজাল্ট স্ট্যাটাস চেক (খুবই বেসিক লজিক)
+      // 2. Check Result Status (Very basic logic)
       const status = result.output.trim() === problem.sample_output.trim() ? "Accepted" : "Wrong Answer"
       setOutput(result.output)
 
-      // ৩. ডাটাবেসে সাবমিশন সেভ করা (আপনার স্কিমা অনুযায়ী)
+      // 3. Save submission to database (According to your schema)
       const { data: { user } } = await supabase.auth.getUser()
       await supabase.from("submissions").insert({
         user_id: user?.id,
@@ -63,7 +63,7 @@ export default function ProblemArena() {
 
   return (
     <div className="flex h-screen bg-[#1e1e1e] text-white overflow-hidden">
-      {/* বাম পাশ: প্রবলেম ডেসক্রিপশন */}
+      {/* Left Side: Problem Description */}
       <div className="w-1/2 p-8 overflow-y-auto border-r border-white/5 bg-[#0F172A]">
         <span className="text-orange-500 font-black uppercase text-xs tracking-widest">{problem?.order_label}</span>
         <h1 className="text-4xl font-black uppercase italic mb-6">{problem?.title}</h1>
@@ -76,7 +76,7 @@ export default function ProblemArena() {
         </div>
       </div>
 
-      {/* ডান পাশ: এডিটর এবং আউটপুট */}
+      {/* Right Side: Editor and Output */}
       <div className="w-1/2 flex flex-col">
         <div className="flex justify-between items-center p-4 bg-[#1e1e1e] border-b border-white/5">
           <select 
@@ -109,7 +109,7 @@ export default function ProblemArena() {
           />
         </div>
 
-        {/* কনসোল/আউটপুট প্যানেল */}
+        {/* Console/Output Panel */}
         <div className="h-48 bg-[#0a0a0a] border-t border-white/10 p-6 overflow-y-auto">
           <div className="flex items-center gap-2 text-slate-500 mb-2 uppercase font-black text-[10px]">
             <Terminal size={12}/> Terminal Output

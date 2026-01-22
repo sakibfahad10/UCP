@@ -24,7 +24,7 @@ export default function SubmissionHistory({ userId }: { userId: string }) {
 
     fetchSubmissions()
 
-    // রিয়েল-টাইম আপডেট লিসেনার
+    // Real-time update listener
     const channel = supabase
       .channel("realtime-submissions")
       .on("postgres_changes", { event: "INSERT", schema: "public", table: "submissions", filter: `user_id=eq.${userId}` }, 

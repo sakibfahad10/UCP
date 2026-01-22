@@ -23,8 +23,8 @@ export default function ProblemBankPage() {
   const fetchProblems = async () => {
     try {
       setLoading(true)
-      // FIX: সরাসরি .select("*") ব্যবহার করা হয়েছে কোনো অতিরিক্ত ফিল্টার ছাড়াই
-      // যদি এরর থাকে তবে এটি সুপাবেস ক্যাশ বা কলাম নামের সমস্যার জন্য হতে পারে।
+      // FIX: Used .select("*") directly without extra filters
+      // If error occurs, it might be due to Supabase cache or column name issues.
       const { data, error } = await supabase
         .from("problems")
         .select("*")

@@ -19,7 +19,7 @@ export default function AdminDashboard() {
   useEffect(() => {
     fetchRealtimeStats()
 
-    // রিসেন্ট সাবমিশনের জন্য রিয়েল-টাইম লিসেনার
+    // Real-time listener for recent submissions
     const channel = supabase
       .channel('admin_live_updates')
       .on('postgres_changes', { event: 'INSERT', schema: 'public', table: 'submissions' }, () => {
@@ -32,13 +32,13 @@ export default function AdminDashboard() {
 
   async function fetchRealtimeStats() {
     try {
-      // ১. টোটাল ইউজার কাউন্ট
+      // 1. Total User Count
       const { count: userCount } = await supabase.from("profiles").select("*", { count: 'exact', head: true })
       
-      // ২. টোটাল সাবমিশন কাউন্ট
+      // 2. Total Submission Count
       const { count: subCount } = await supabase.from("submissions").select("*", { count: 'exact', head: true })
 
-      // ৩. রিসেন্ট সাবমিশন ডাটা ফেচ (Profiles সহ জয়েন)
+      // 3. Fetch Recent Submissions Data (Join with Profiles)
       const { data: recent } = await supabase
         .from("submissions")
         .select(`*, profiles:user_id (username, display_name)`)

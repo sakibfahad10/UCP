@@ -2,7 +2,7 @@
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { Bell, LogOut, ShieldCheck, X, LayoutGrid } from "lucide-react"
-import { useAuth } from "@/lib/auth-context" // এরর এড়াতে সঠিক পাথ নিশ্চিত করা হয়েছে
+import { useAuth } from "@/lib/auth-context" // Ensuring correct path to avoid errors
 import { useState, useEffect, useRef } from "react" 
 
 export default function Header() {
@@ -44,12 +44,12 @@ export default function Header() {
         {/* Logo Section */}
         <div className="flex items-center gap-10">
           <Link href="/" className="flex items-center gap-3 group">
-            <div className="w-10 h-10 bg-gradient-to-br from-orange-400 to-orange-600 rounded-xl flex items-center justify-center shadow-lg shadow-orange-500/20 group-hover:scale-105 transition-all duration-300">
+            <div className="w-14 h-10 bg-gradient-to-br from-orange-400 to-orange-600 rounded-xl flex items-center justify-center shadow-lg shadow-orange-500/20 group-hover:scale-105 transition-all duration-300">
               <span className="text-white text-base font-black tracking-tighter">UCP</span>
             </div>
             <div className="hidden lg:block">
-              <p className="text-white text-sm font-bold leading-none tracking-tight">UIU</p>
-              <p className="text-slate-500 text-[10px] font-bold uppercase tracking-[0.2em] mt-1">Arena</p>
+              <p className="text-white text-sm font-bold leading-none tracking-tight">UIU Comepetitive Programming</p>
+              
             </div>
           </Link>
 
@@ -73,7 +73,7 @@ export default function Header() {
                 )
               })}
               
-              {/* এডমিন বাটন - শুধুমাত্র এডমিনদের জন্য দৃশ্যমান */}
+              {/* Admin Button - Visible only to admins */}
               {user?.is_admin && (
                 <Link 
                   href="/admin/contests" 

@@ -15,7 +15,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       const { data: { session } } = await supabase.auth.getSession()
       
       if (session?.user) {
-        // প্রোফাইল ডাটা ফেচ করা হচ্ছে
+        // Fetching profile data
         const { data: profile, error } = await supabase
           .from("profiles")
           .select("*")
@@ -24,12 +24,12 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
         if (error) {
           console.error("Profile fetch error:", error.message)
-          // প্রোফাইল না পেলেও সেশন ইউজার সেট করা হচ্ছে যাতে লগইন থাকে
+          // Set session user even if profile not found to keep logged in
           setUser(session.user)
         } else {
-          // সেশন ইউজার এবং প্রোফাইল ডাটা মার্জ করা হচ্ছে (is_admin সহ)
+          // Merging session user and profile data (including is_admin)
           const fullUser = { ...session.user, ...profile }
-          console.log("Logged in user data with role:", fullUser) // Debugging: কনসোলে চেক করুন
+          console.log("Logged in user data with role:", fullUser) // Debugging: Check console
           setUser(fullUser)
         }
       } else {

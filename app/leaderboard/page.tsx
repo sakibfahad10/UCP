@@ -17,7 +17,7 @@ export default function LeaderboardSystem() {
   const [searchQuery, setSearchQuery] = useState("")
   const supabase = createClient()
 
-  // ১. লিডারবোর্ড ডাটা ফেচ করার আপডেট করা ফাংশন
+  // 1. Updated function to fetch leaderboard data
   const fetchStandings = async () => {
     try {
       const { data, error } = await supabase
@@ -34,7 +34,7 @@ export default function LeaderboardSystem() {
       if (data) {
         const processed = data
           .map((user: any) => {
-            // সাবমিশন না থাকলে খালি অ্যারে সেট করা (প্রিভেন্ট ক্রাশ)
+            // Set empty array if no submissions (Prevent Crash)
             const subs = user.submissions || []
             const solved = subs.filter((s: any) => s.status === 'AC').length
             const totalScore = subs.reduce((acc: number, curr: any) => acc + (curr.score || 0), 0)
@@ -45,7 +45,7 @@ export default function LeaderboardSystem() {
               totalScore 
             }
           })
-          // শুধু ইউজারনেম আছে এমন প্রোফাইল দেখানো এবং স্কোর অনুযায়ী সর্ট করা
+          // Show only profiles with username and sort by score
           .filter(user => user.username)
           .sort((a, b) => b.totalScore - a.totalScore || b.solved - a.solved)
 
@@ -56,7 +56,7 @@ export default function LeaderboardSystem() {
     }
   }
 
-  // ২. রিয়েল-টাইম লিসেনার এবং ইনিশিয়াল ফেচ
+  // 2. Real-time listener and initial fetch
   useEffect(() => {
     const init = async () => {
       await fetchStandings()
@@ -95,7 +95,7 @@ export default function LeaderboardSystem() {
     }
   }, [supabase])
 
-  // সার্চ ফিল্টারিং লজিক
+  // Search Filtering Logic
   const filteredStandings = standings.filter(user => 
     user.username?.toLowerCase().includes(searchQuery.toLowerCase())
   )

@@ -41,11 +41,11 @@ export default function EditProblemPage({ params }: { params: Promise<{ id: stri
   useEffect(() => {
     async function fetchProblemData() {
       try {
-        // ১. কন্টেস্ট লিস্ট আনা (ড্রপডাউনের জন্য)
+        // 1. Fetch Contest List (For Dropdown)
         const { data: cData } = await supabase.from("contests").select("id, title")
         setContests(cData || [])
 
-        // ২. প্রবলেম ইনফো আনা
+        // 2. Fetch Problem Info
         const { data: problem, error: pError } = await supabase
           .from("problems")
           .select("*")
@@ -55,7 +55,7 @@ export default function EditProblemPage({ params }: { params: Promise<{ id: stri
         if (pError) throw pError
         if (problem) setFormData(problem)
 
-        // ৩. টেস্টকেসগুলো আনা
+        // 3. Fetch Testcases
         const { data: tcs, error: tError } = await supabase
           .from("testcases")
           .select("*")
@@ -63,7 +63,7 @@ export default function EditProblemPage({ params }: { params: Promise<{ id: stri
 
         if (tError) throw tError
         
-        // ফিক্স: ডাটাবেস কলাম (input, expected_output) থেকে UI স্টেটে ম্যাপ করা
+        // Fix: Map database columns (input, expected_output) to UI state
         const formattedTcs = tcs?.map(tc => ({
           id: tc.id,
           input: tc.input,
@@ -100,7 +100,7 @@ export default function EditProblemPage({ params }: { params: Promise<{ id: stri
     setIsSubmitting(true)
 
     try {
-      // ১. প্রবলেম আপডেট
+      // 1. Update Problem
       const { error: pError } = await supabase
         .from("problems")
         .update(formData)
@@ -108,7 +108,7 @@ export default function EditProblemPage({ params }: { params: Promise<{ id: stri
 
       if (pError) throw pError
 
-      // ২. টেস্টকেস আপডেট (পুরনো ডিলিট করে নতুন ইনসার্ট - সবচেয়ে সেফ মেথড)
+      // 2. Update Testcases (Delete old and insert new - safest method)
       await supabase.from("testcases").delete().eq("problem_id", problemId)
 
       const tcData = testcases.map(tc => ({

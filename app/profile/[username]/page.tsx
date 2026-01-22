@@ -23,7 +23,7 @@ export default function PublicProfilePage() {
   useEffect(() => {
     async function fetchPublicProfile() {
       try {
-        // ১. প্রোফাইল ডাটা ফেচ করা
+        // 1. Fetch Profile Data
         const { data: profileData, error: profileError } = await supabase
           .from("profiles")
           .select("*")
@@ -33,7 +33,7 @@ export default function PublicProfilePage() {
         if (profileError) throw profileError
         setProfile(profileData)
 
-        // ২. রিসেন্ট সাবমিশন ফেচ করা
+        // 2. Fetch Recent Submissions
         const { data: subData } = await supabase
           .from("submissions")
           .select("*, contests(title)")

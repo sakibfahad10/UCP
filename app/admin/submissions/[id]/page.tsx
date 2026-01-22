@@ -23,8 +23,8 @@ export default function SubmissionDetailsPage() {
   const fetchSubmissionDetails = async () => {
     setLoading(true)
     try {
-      // এখানে আমরা কলামের নাম সরাসরি ব্যবহার করছি যাতে রিলেশন নিয়ে কনফিউশন না হয়
-      // যদি !problem_id কাজ না করে, তবে !submissions_problem_id_fkey ট্রাই করুন
+      // Using column names directly to avoid relation confusion
+      // If !problem_id doesn't work, try !submissions_problem_id_fkey
       const { data, error } = await supabase
         .from("submissions")
         .select(`
@@ -36,7 +36,7 @@ export default function SubmissionDetailsPage() {
         .maybeSingle()
 
       if (error) {
-        // যদি উপরের কুয়েরি ফেইল করে তবে রিলেশন ছাড়া শুধু ডাটা আনার চেষ্টা করবে
+        // If previous query fails, try fetching data without relations
         console.warn("Retrying without embedded relations...")
         const { data: simpleData, error: simpleError } = await supabase
           .from("submissions")

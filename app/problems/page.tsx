@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react"
 import { createClient } from "@/lib/supabase/client"
- // ৫ নম্বর লাইনটি এভাবে আপডেট করুন
+ // Update line 5 like this
 import Header from "@/components/header"
 import { 
   Search, Code2, CheckCircle2, 
@@ -31,7 +31,7 @@ export default function UserProblemListPage() {
     fetchProblems()
   }, [])
 
-  // সার্চ এবং ফিল্টার লজিক
+  // Search and Filter Logic
   const filtered = problems.filter(p => {
     const matchesFilter = filter === "All" || p.difficulty === filter;
     const matchesSearch = p.title.toLowerCase().includes(searchQuery.toLowerCase());

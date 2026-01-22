@@ -15,9 +15,9 @@ export default function NewProblemPage() {
   const router = useRouter()
   const supabase = createClient()
   const [isSubmitting, setIsSubmitting] = useState(false)
-  const [contests, setContests] = useState<any[]>([]) // Arena selection এর জন্য
+  const [contests, setContests] = useState<any[]>([]) // For Arena selection
 
-  // মেইন প্রবলেম ডাটা স্টেট
+  // Main Problem Data State
   const [formData, setFormData] = useState({
     title: "",
     difficulty: "Easy",
@@ -30,13 +30,13 @@ export default function NewProblemPage() {
     tags: [] as string[],
     time_limit: 1000,
     memory_limit: 256,
-    contest_id: null as string | null // ডাটাবেস লিঙ্ক ফিক্স
+    contest_id: null as string | null // Database link fix
   })
 
   const [testcases, setTestcases] = useState<any[]>([])
   const [tagInput, setTagInput] = useState("")
 
-  // বিদ্যমান কন্টেস্টগুলো লোড করা
+  // Load existing contests
   useEffect(() => {
     async function fetchContests() {
       const { data } = await supabase
@@ -78,7 +78,7 @@ export default function NewProblemPage() {
     setIsSubmitting(true)
 
     try {
-      // ১. 'problems' টেবিলে ডাটা পুশ করা
+      // 1. Push data to 'problems' table
       const { data: problem, error: pError } = await supabase
         .from("problems")
         .insert([formData])
@@ -87,7 +87,7 @@ export default function NewProblemPage() {
 
       if (pError) throw pError
 
-      // ২. টেস্টকেস ম্যাপিং (Database কলামের সাথে সিঙ্ক করা)
+      // 2. Testcase Mapping (Sync with Database column)
       const tcData = testcases.map(tc => ({
         problem_id: problem.id,
         input: tc.input || "", 
@@ -95,7 +95,7 @@ export default function NewProblemPage() {
         is_sample: tc.is_sample || false
       }))
 
-      // ৩. 'testcases' টেবিলে পুশ করা
+      // 3. Push to 'testcases' table
       const { error: tcError } = await supabase.from("testcases").insert(tcData)
       if (tcError) throw tcError
 

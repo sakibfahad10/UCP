@@ -13,7 +13,7 @@ export default function ContestsLobby() {
 
   useEffect(() => {
     async function getContests() {
-      // স্মার্ট কুয়েরি: প্রবলেম কাউন্টসহ ডাটা নিয়ে আসা
+      // Smart Query: Fetch data with problem count
       const { data, error } = await supabase
         .from("contests")
         .select(`*, problems(id)`)
@@ -33,7 +33,7 @@ export default function ContestsLobby() {
 
   return (
     <div className="min-h-screen bg-[#FAFAFA] text-slate-900">
-      {/* ১. নেভিগেশন বার এখানে শো করবে */}
+      {/* 1. Navigation Bar will show here */}
       <Header />
 
       <main className="max-w-6xl mx-auto px-6 pt-24 pb-20">
