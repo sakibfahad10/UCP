@@ -6,6 +6,7 @@ import Editor from "@monaco-editor/react"
 import Header from "@/components/header"
 import { Play, Send, RotateCcw, CheckCircle, XCircle, Loader2, FileText, Code2, Cpu } from "lucide-react"
 import { toast } from "sonner"
+import { executeCode } from "@/app/actions/execute-code"
 
 export default function VSCodeStyleIDE({ params }: { params: Promise<{ id: string }> }) {
   const { id: problemId } = use(params)
@@ -45,56 +46,43 @@ export default function VSCodeStyleIDE({ params }: { params: Promise<{ id: strin
   const handleAction = async (isSubmit: boolean) => {
     if (!code.trim()) return toast.error("Code is empty!");
     
-    // 1. Check User Session
-    const { data: { user } } = await supabase.auth.getUser();
-    if (isSubmit && !user) {
-      return toast.error("Please login to submit your code!");
-    }
-
     setIsJudging(true);
     setActiveTab("output");
     
     try {
-      // 2. API Call
-      const res = await fetch('/api/run', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ 
-          code, 
-          language, 
-          input: isSubmit ? problem.sample_input : customInput 
-        })
+      const result = await executeCode(
+        code, 
+        language, 
+        isSubmit ? problemId : undefined, 
+        undefined, // no contestId in global solve usually, unless we add it
+        isSubmit ? undefined : customInput 
+      );
+
+      if (!result.success) {
+        toast.error(result.output);
+        return;
+      }
+      
+      const displayStatus = 
+        result.verdict === "AC" ? "Accepted" : 
+        result.verdict === "WA" ? "Wrong Answer" : 
+        result.verdict === "TLE" ? "Time Limit Exceeded" : 
+        result.verdict === "CE" ? "Compilation Error" : "Error";
+
+      setOutput({ 
+        output: result.output, 
+        cpuTime: result.cpuTime, 
+        memory: result.memory, 
+        displayStatus 
       });
 
-      const data = await res.json();
-      
-      // 3. Result Comparison (Determine AC or WA)
-      const isCorrect = data.output?.trim() === problem.sample_output?.trim();
-      const finalStatus = isCorrect ? "AC" : "WA"; 
-
-      // Display Status for UI
-      setOutput({ ...data, displayStatus: isCorrect ? "Accepted" : "Wrong Answer" });
-
       if (isSubmit) {
-        // 4. Save submission to database (Sending AC/WA per constraint)
-        const { error: subError } = await supabase.from('submissions').insert({ 
-          problem_id: problemId, 
-          user_id: user?.id,
-          code: code, 
-          language: language, 
-          status: finalStatus, // Database only accepts this
-          score: isCorrect ? 10 : 0 
-        });
-
-        if (subError) {
-          console.error("Database Error Detail:", subError.message);
-          toast.error(`Sync Error: ${subError.message}`);
-        } else {
-          isCorrect ? toast.success("Accepted! Points added.") : toast.error("Wrong Answer on Sample.");
-        }
+        result.verdict === "AC" 
+          ? toast.success("Submission Accepted!") 
+          : toast.error(`Submission Failed: ${displayStatus}`);
       }
     } catch (e) { 
-      toast.error("Execution failed. Check connection."); 
+      toast.error("Execution engine unreachable."); 
     } finally { 
       setIsJudging(false); 
     }

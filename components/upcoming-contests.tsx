@@ -4,7 +4,6 @@ import React, { useEffect, useState } from "react"
 import Link from "next/link"
 import { createClient } from "@/lib/supabase/client"
 import { Calendar, Users, ArrowUpRight, Trophy } from "lucide-react"
-import { motion } from "framer-motion"
 
 export default function UpcomingContestsPremiumBg() {
   const supabase = createClient()
@@ -80,12 +79,9 @@ export default function UpcomingContestsPremiumBg() {
               <div key={i} className="h-44 rounded-2xl bg-white/60 backdrop-blur-sm border border-slate-100 animate-pulse" />
             ))
           ) : contests.length > 0 ? contests.map((c: any) => (
-            <motion.article
+            <article
               key={c.id}
-              initial={{ opacity: 0, y: 12 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.45 }}
-              className="relative rounded-3xl overflow-hidden border border-slate-100 bg-white/70 backdrop-blur-[8px] p-6 shadow-[0_10px_30px_-12px_rgba(2,6,23,0.08)] group hover:shadow-xl transition-all duration-300"
+              className="relative rounded-3xl overflow-hidden border border-slate-100 bg-white/70 backdrop-blur-[8px] p-6 shadow-[0_10px_30px_-12px_rgba(2,6,23,0.08)] group hover:shadow-xl transition-all duration-300 animate-in fade-in slide-in-from-bottom-2"
             >
               <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-orange-400 to-rose-500" />
 
@@ -127,7 +123,7 @@ export default function UpcomingContestsPremiumBg() {
                   </Link>
                 </div>
               </div>
-            </motion.article>
+            </article>
           )) : (
             <div className="col-span-3 rounded-[3rem] bg-white/60 backdrop-blur-sm border border-slate-100 p-16 flex flex-col items-center justify-center text-center">
               <div className="w-20 h-20 bg-slate-50 rounded-full flex items-center justify-center mb-6">

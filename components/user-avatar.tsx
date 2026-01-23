@@ -2,6 +2,7 @@
 
 import { User } from "lucide-react"
 import { cn } from "@/lib/utils"
+import { useState } from "react"
 
 interface UserAvatarProps {
   avatarUrl?: string | null
@@ -23,37 +24,31 @@ export default function UserAvatar({
   size = "md",
   className 
 }: UserAvatarProps) {
+  const [imageError, setImageError] = useState(false)
   const sizeClass = sizeClasses[size]
   
-  // If avatar URL exists, show the image
-  if (avatarUrl) {
+  // If avatar URL exists and hasn't errored out, show the image
+  if (avatarUrl && !imageError) {
     return (
-      <div className={cn("relative rounded-full overflow-hidden bg-slate-100", sizeClass, className)}>
+      <div className={cn("relative rounded-full overflow-hidden bg-slate-800", sizeClass, className)}>
         <img 
           src={avatarUrl} 
           alt={name || "User"} 
           className="w-full h-full object-cover"
-          onError={(e) => {
-            // If image fails to load, hide it and show fallback
-            e.currentTarget.style.display = 'none'
-          }}
+          onError={() => setImageError(true)}
         />
-        {/* Fallback icon in case image fails */}
-        <div className="absolute inset-0 flex items-center justify-center bg-slate-100">
-          <User className="w-1/2 h-1/2 text-slate-400" />
-        </div>
       </div>
     )
   }
   
-  // Default: show user icon
+  // Default/Fallback: show user icon
   return (
     <div className={cn(
-      "rounded-full bg-slate-100 flex items-center justify-center",
+      "rounded-full bg-slate-800 flex items-center justify-center border border-white/10",
       sizeClass,
       className
     )}>
-      <User className="w-1/2 h-1/2 text-slate-400" />
+      <User className="w-1/2 h-1/2 text-slate-500" />
     </div>
   )
 }
