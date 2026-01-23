@@ -7,22 +7,36 @@ import Header from "@/components/header"
 import { 
   Trophy, Target, User as UserIcon, Calendar, 
   Zap, ChevronRight, Github, Globe, 
-  Code2, Award, Activity, Loader2, ArrowLeft
+  Code2, Award, Activity, Loader2, ArrowLeft,
+  MapPin, Edit, Save, X
 } from "lucide-react"
 import Link from "next/link"
+import UserAvatar from "@/components/user-avatar"
 
 export default function PublicProfilePage() {
   const params = useParams()
   const router = useRouter()
   const usernameParam = params.username as string
   const [profile, setProfile] = useState<any>(null)
+  const [currentUser, setCurrentUser] = useState<any>(null)
   const [submissions, setSubmissions] = useState<any[]>([])
   const [loading, setLoading] = useState(true)
+  const [isEditing, setIsEditing] = useState(false)
+  const [editForm, setEditForm] = useState({
+    bio: "",
+    location: "",
+    website: "",
+    display_name: ""
+  })
   const supabase = createClient()
 
   useEffect(() => {
     async function fetchPublicProfile() {
       try {
+        // 0. Get Current User (for edit permission)
+        const { data: { user } } = await supabase.auth.getUser()
+        setCurrentUser(user)
+
         // 1. Fetch Profile Data
         const { data: profileData, error: profileError } = await supabase
           .from("profiles")
@@ -32,6 +46,12 @@ export default function PublicProfilePage() {
 
         if (profileError) throw profileError
         setProfile(profileData)
+        setEditForm({
+          bio: profileData.bio || "",
+          location: profileData.location || "",
+          website: profileData.website || "",
+          display_name: profileData.display_name || ""
+        })
 
         // 2. Fetch Recent Submissions
         const { data: subData } = await supabase
@@ -51,6 +71,22 @@ export default function PublicProfilePage() {
 
     if (usernameParam) fetchPublicProfile()
   }, [usernameParam, supabase])
+
+  const handleSaveProfile = async () => {
+    try {
+      const { error } = await supabase
+        .from("profiles")
+        .update(editForm)
+        .eq("id", currentUser?.id)
+
+      if (error) throw error
+      
+      setProfile({ ...profile, ...editForm })
+      setIsEditing(false)
+    } catch (error) {
+      console.error("Failed to update profile", error)
+    }
+  }
 
   if (loading) return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-white">
@@ -72,7 +108,7 @@ export default function PublicProfilePage() {
     </div>
   )
 
-  const avatar = profile.avatar_url || `https://api.dicebear.com/7.x/avataaars/svg?seed=${profile.username}`
+
 
   return (
     <div className="min-h-screen bg-[#FAFAFA] text-slate-900">
@@ -86,10 +122,11 @@ export default function PublicProfilePage() {
           <div className="flex flex-col md:flex-row items-center md:items-end gap-10">
             <div className="relative group">
               <div className="absolute -inset-1 bg-gradient-to-tr from-orange-500 to-yellow-500 rounded-[2.5rem] blur opacity-30 group-hover:opacity-60 transition duration-500" />
-              <img 
-                src={avatar} 
-                alt={profile.username} 
-                className="relative w-44 h-44 rounded-[2.2rem] border-4 border-slate-800 bg-slate-800 object-cover"
+              <UserAvatar 
+                avatarUrl={profile.avatar_url}
+                name={profile.display_name || profile.username}
+                size="xl"
+                className="relative w-44 h-44 rounded-[2.2rem] border-4 border-slate-800"
               />
               <div className="absolute -bottom-3 -right-3 bg-white p-3 rounded-2xl shadow-2xl">
                 <Trophy className="w-6 h-6 text-orange-500" />
@@ -106,17 +143,89 @@ export default function PublicProfilePage() {
                 </div>
               </div>
               
-              <div className="flex flex-wrap justify-center md:justify-start gap-6 text-slate-400">
+                <div className="flex flex-wrap justify-center md:justify-start gap-6 text-slate-400">
                 <p className="font-bold tracking-widest text-xs uppercase flex items-center gap-2">
                   <span className="text-orange-500">@</span>{profile.username}
                 </p>
+                {profile.location && (
+                  <p className="font-bold tracking-widest text-xs uppercase flex items-center gap-2">
+                    <MapPin size={14} className="text-slate-600" /> 
+                    {profile.location}
+                  </p>
+                )}
                 <p className="font-bold tracking-widest text-xs uppercase flex items-center gap-2">
                   <Calendar size={14} className="text-slate-600" /> 
                   Joined {new Date(profile.created_at).toLocaleDateString(undefined, {month: 'short', year: 'numeric'})}
                 </p>
+                
+                {currentUser?.id === profile.id && (
+                  <button 
+                    onClick={() => setIsEditing(!isEditing)}
+                    className="ml-4 px-4 py-2 bg-slate-800 text-white rounded-xl text-[10px] font-black uppercase tracking-widest flex items-center gap-2 hover:bg-orange-500 transition-colors"
+                  >
+                    {isEditing ? <X size={14} /> : <Edit size={14} />}
+                    {isEditing ? "Cancel" : "Edit Profile"}
+                  </button>
+                )}
               </div>
             </div>
           </div>
+
+          {/* Edit Form */}
+          {isEditing && (
+            <div className="mt-10 bg-white p-8 rounded-3xl border border-slate-100 shadow-xl animate-in fade-in slide-in-from-top-4">
+               <h3 className="text-sm font-black uppercase tracking-widest text-slate-900 mb-6 flex items-center gap-2">
+                 <Edit size={16} className="text-orange-500" /> Update Identity
+               </h3>
+               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                 <div>
+                    <label className="text-[10px] font-black uppercase text-slate-400 mb-2 block tracking-widest">Display Name</label>
+                    <input 
+                      value={editForm.display_name} 
+                      onChange={(e) => setEditForm({...editForm, display_name: e.target.value})}
+                      className="w-full bg-slate-50 border-none rounded-2xl px-6 py-4 font-bold text-sm outline-none" 
+                      placeholder="Your Name"
+                    />
+                 </div>
+                 <div>
+                    <label className="text-[10px] font-black uppercase text-slate-400 mb-2 block tracking-widest">Location</label>
+                    <input 
+                      value={editForm.location} 
+                      onChange={(e) => setEditForm({...editForm, location: e.target.value})}
+                      className="w-full bg-slate-50 border-none rounded-2xl px-6 py-4 font-bold text-sm outline-none" 
+                      placeholder="City, Country"
+                    />
+                 </div>
+                 <div className="md:col-span-2">
+                    <label className="text-[10px] font-black uppercase text-slate-400 mb-2 block tracking-widest">Bio / Status</label>
+                    <textarea 
+                      value={editForm.bio} 
+                      onChange={(e) => setEditForm({...editForm, bio: e.target.value})}
+                      className="w-full bg-slate-50 border-none rounded-2xl px-6 py-4 font-bold text-sm outline-none resize-none" 
+                      rows={3}
+                      placeholder="Tell us about your stack..."
+                    />
+                 </div>
+                 <div className="md:col-span-2">
+                    <label className="text-[10px] font-black uppercase text-slate-400 mb-2 block tracking-widest">Website / Portfolio</label>
+                    <input 
+                      value={editForm.website} 
+                      onChange={(e) => setEditForm({...editForm, website: e.target.value})}
+                      className="w-full bg-slate-50 border-none rounded-2xl px-6 py-4 font-bold text-sm outline-none" 
+                      placeholder="https://"
+                    />
+                 </div>
+               </div>
+               <div className="mt-6 flex justify-end">
+                 <button 
+                  onClick={handleSaveProfile}
+                  className="px-8 py-3 bg-slate-900 text-white rounded-xl text-[10px] font-black uppercase tracking-widest flex items-center gap-2 hover:bg-emerald-500 transition-colors shadow-lg"
+                 >
+                   <Save size={14} /> Save Changes
+                 </button>
+               </div>
+            </div>
+          )}
         </div>
       </div>
 
@@ -143,12 +252,21 @@ export default function PublicProfilePage() {
               </div>
 
               <div className="mt-8 space-y-4">
+                 {profile.bio && (
+                   <p className="text-sm font-medium text-slate-600 italic border-l-4 border-orange-500 pl-4 py-1">
+                     "{profile.bio}"
+                   </p>
+                 )}
+                 
                  <div className="flex items-center gap-3 text-xs font-bold text-slate-500 hover:text-orange-500 transition-colors">
                     <Github size={16} /> <span>/dev/null</span>
                  </div>
-                 <div className="flex items-center gap-3 text-xs font-bold text-slate-500 hover:text-orange-500 transition-colors">
-                    <Globe size={16} /> <span>arena.network</span>
-                 </div>
+                 
+                 {profile.website && (
+                   <a href={profile.website} target="_blank" rel="noreferrer" className="flex items-center gap-3 text-xs font-bold text-slate-500 hover:text-orange-500 transition-colors">
+                      <Globe size={16} /> <span>{new URL(profile.website).hostname}</span>
+                   </a>
+                 )}
               </div>
             </div>
 

@@ -25,6 +25,10 @@ export default function EditContestPage() {
     description: "",
     start_time: "",
     end_time: "",
+    registration_start_time: "",
+    registration_end_time: "",
+    max_participants: 0,
+    allow_teams: false,
     problems: [] as string[],
     rules: {
       penalty_per_wrong_submission: 20,
@@ -39,7 +43,7 @@ export default function EditContestPage() {
     try {
       const { data, error } = await supabase
         .from("contests")
-        .select("title, description, start_time, end_time, problems, rules")
+        .select("title, description, start_time, end_time, registration_start_time, registration_end_time, max_participants, allow_teams, problems, rules")
         .eq("id", id)
         .maybeSingle()
 
@@ -51,12 +55,16 @@ export default function EditContestPage() {
           description: data.description || "",
           start_time: data.start_time ? new Date(data.start_time).toISOString().slice(0, 16) : "",
           end_time: data.end_time ? new Date(data.end_time).toISOString().slice(0, 16) : "",
+          registration_start_time: data.registration_start_time ? new Date(data.registration_start_time).toISOString().slice(0, 16) : "",
+          registration_end_time: data.registration_end_time ? new Date(data.registration_end_time).toISOString().slice(0, 16) : "",
+          max_participants: data.max_participants || 0,
+          allow_teams: data.allow_teams || false,
           // Ensure jsonb from database is treated as an array
           problems: Array.isArray(data.problems) ? data.problems : [],
-          rules: data.rules || {
-            penalty_per_wrong_submission: 20,
-            show_leaderboard_immediately: true,
-            contest_mode: "icpc"
+          rules: {
+            penalty_per_wrong_submission: data.rules?.penalty_per_wrong_submission ?? 20,
+            show_leaderboard_immediately: data.rules?.show_leaderboard_immediately ?? true,
+            contest_mode: data.rules?.contest_mode || "icpc"
           }
         })
       }
@@ -82,6 +90,10 @@ export default function EditContestPage() {
         description: formData.description,
         start_time: new Date(formData.start_time).toISOString(),
         end_time: new Date(formData.end_time).toISOString(),
+        registration_start_time: formData.registration_start_time ? new Date(formData.registration_start_time).toISOString() : null,
+        registration_end_time: formData.registration_end_time ? new Date(formData.registration_end_time).toISOString() : null,
+        max_participants: formData.max_participants,
+        allow_teams: formData.allow_teams,
         // Sending data for jsonb column
         problems: formData.problems, 
         rules: formData.rules
@@ -172,25 +184,51 @@ export default function EditContestPage() {
         </div>
 
         {/* Schedule */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          <div className="bg-white border border-slate-100 p-8 rounded-[2.5rem] shadow-sm">
-            <h3 className="text-[10px] font-black uppercase tracking-widest text-slate-400 mb-6 flex items-center gap-2"><Calendar size={14} className="text-orange-500"/> Start Time</h3>
-            <input 
-              type="datetime-local" 
-              className="w-full px-6 py-4 bg-slate-50 border-none rounded-2xl text-xs font-black uppercase outline-none"
-              value={formData.start_time}
-              onChange={(e) => setFormData({...formData, start_time: e.target.value})}
-            />
-          </div>
-          <div className="bg-white border border-slate-100 p-8 rounded-[2.5rem] shadow-sm">
-            <h3 className="text-[10px] font-black uppercase tracking-widest text-slate-400 mb-6 flex items-center gap-2"><Clock size={14} className="text-orange-500"/> End Time</h3>
-            <input 
-              type="datetime-local" 
-              className="w-full px-6 py-4 bg-slate-50 border-none rounded-2xl text-xs font-black uppercase outline-none"
-              value={formData.end_time}
-              onChange={(e) => setFormData({...formData, end_time: e.target.value})}
-            />
-          </div>
+        {/* Schedule */}
+        <div className="bg-white border border-slate-100 p-8 rounded-[2.5rem] shadow-sm space-y-8">
+           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+              <div>
+                <h3 className="text-[10px] font-black uppercase tracking-widest text-slate-400 mb-6 flex items-center gap-2"><Calendar size={14} className="text-orange-500"/> Start Time</h3>
+                <input 
+                  type="datetime-local" 
+                  className="w-full px-6 py-4 bg-slate-50 border-none rounded-2xl text-xs font-black uppercase outline-none"
+                  value={formData.start_time}
+                  onChange={(e) => setFormData({...formData, start_time: e.target.value})}
+                />
+              </div>
+              <div>
+                <h3 className="text-[10px] font-black uppercase tracking-widest text-slate-400 mb-6 flex items-center gap-2"><Clock size={14} className="text-orange-500"/> End Time</h3>
+                <input 
+                  type="datetime-local" 
+                  className="w-full px-6 py-4 bg-slate-50 border-none rounded-2xl text-xs font-black uppercase outline-none"
+                  value={formData.end_time}
+                  onChange={(e) => setFormData({...formData, end_time: e.target.value})}
+                />
+              </div>
+           </div>
+
+           <div className="h-[1px] bg-slate-100 w-full" />
+
+           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+              <div>
+                <h3 className="text-[10px] font-black uppercase tracking-widest text-slate-400 mb-6 flex items-center gap-2 text-blue-500"><Calendar size={14} /> Reg. Open</h3>
+                <input 
+                  type="datetime-local" 
+                  className="w-full px-6 py-4 bg-blue-50/50 border-none rounded-2xl text-xs font-black uppercase outline-none text-blue-900"
+                  value={formData.registration_start_time}
+                  onChange={(e) => setFormData({...formData, registration_start_time: e.target.value})}
+                />
+              </div>
+              <div>
+                <h3 className="text-[10px] font-black uppercase tracking-widest text-slate-400 mb-6 flex items-center gap-2 text-blue-500"><Clock size={14} /> Reg. Close</h3>
+                <input 
+                  type="datetime-local" 
+                  className="w-full px-6 py-4 bg-blue-50/50 border-none rounded-2xl text-xs font-black uppercase outline-none text-blue-900"
+                  value={formData.registration_end_time}
+                  onChange={(e) => setFormData({...formData, registration_end_time: e.target.value})}
+                />
+              </div>
+           </div>
         </div>
 
         {/* Rules */}
@@ -199,7 +237,7 @@ export default function EditContestPage() {
             <Settings2 size={18} className="text-slate-900" />
             <h3 className="text-xs font-black uppercase tracking-widest text-slate-900">Arena Rules</h3>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             <div className="p-5 bg-slate-50 rounded-2xl">
               <p className="text-[9px] font-black text-slate-400 uppercase mb-3">Penalty (Minutes)</p>
               <input 
@@ -212,12 +250,24 @@ export default function EditContestPage() {
                 })}
               />
             </div>
-            <div className="p-5 bg-slate-50 rounded-2xl flex items-center justify-between">
+            <div className="p-5 bg-slate-50 rounded-2xl">
+              <p className="text-[9px] font-black text-slate-400 uppercase mb-3">Max Participants</p>
+              <input 
+                type="number" 
+                className="bg-transparent text-xl font-black text-slate-900 outline-none w-full"
+                value={formData.max_participants}
+                onChange={(e) => setFormData({
+                  ...formData, 
+                  max_participants: parseInt(e.target.value)
+                })}
+              />
+            </div>
+            <div className="p-5 bg-slate-50 rounded-2xl flex items-center justify-between cursor-pointer" onClick={() => setFormData({...formData, allow_teams: !formData.allow_teams})}>
               <div>
-                <p className="text-[9px] font-black text-slate-400 uppercase mb-1">Contest Mode</p>
-                <p className="text-sm font-black text-slate-900 uppercase italic">ICPC Standard</p>
+                <p className="text-[9px] font-black text-slate-400 uppercase mb-1">Team Mode</p>
+                <p className={`text-sm font-black uppercase italic ${formData.allow_teams ? "text-green-600" : "text-slate-900"}`}>{formData.allow_teams ? "Enabled" : "Individual Only"}</p>
               </div>
-              <BookOpen size={20} className="text-slate-300" />
+              <BookOpen size={20} className={formData.allow_teams ? "text-green-500" : "text-slate-300"} />
             </div>
           </div>
         </div>

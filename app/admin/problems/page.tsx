@@ -5,7 +5,7 @@ import { createClient } from "@/lib/supabase/client"
 import { 
   Plus, Search, Database, Edit2, Trash2, 
   Tag, Loader2, AlertCircle, LayoutGrid, List,
-  ArrowUpRight, BarChart3, ChevronRight
+  ArrowUpRight, BarChart3, ChevronRight, Eye, EyeOff
 } from "lucide-react"
 import Link from "next/link"
 import { toast } from "sonner"
@@ -51,6 +51,30 @@ export default function ProblemBankPage() {
     } else {
       toast.success("Problem successfully removed")
       setProblems(prev => prev.filter(p => p.id !== id))
+    }
+  }
+
+  const toggleVisibility = async (id: string, currentHidden: boolean) => {
+    const newHidden = !currentHidden
+    
+    // Optimistic update
+    setProblems(prev => prev.map(p => 
+      p.id === id ? { ...p, hidden: newHidden } : p
+    ))
+
+    const { error } = await supabase
+      .from("problems")
+      .update({ hidden: newHidden })
+      .eq("id", id)
+
+    if (error) {
+      // Revert if failed
+      setProblems(prev => prev.map(p => 
+        p.id === id ? { ...p, hidden: currentHidden } : p
+      ))
+      toast.error("Failed to update visibility")
+    } else {
+      toast.success(newHidden ? "Problem hidden from public" : "Problem visible to public")
     }
   }
 
@@ -145,8 +169,24 @@ export default function ProblemBankPage() {
                 }`}>
                   {problem.difficulty}
                 </div>
+                {problem.hidden && (
+                   <div className="px-3 py-1 bg-slate-900 text-white text-[9px] font-black uppercase rounded-lg tracking-widest flex items-center gap-1">
+                      <EyeOff size={10} /> Hidden
+                   </div>
+                )}
                 
                 <div className="flex gap-2">
+                  <button 
+                    onClick={() => toggleVisibility(problem.id, problem.hidden)}
+                    className={`p-3 border text-slate-400 rounded-xl transition-all ${
+                      problem.hidden 
+                        ? "bg-slate-100 border-slate-200 hover:bg-slate-200" 
+                        : "bg-white border-slate-100 hover:text-blue-600"
+                    }`}
+                    title={problem.hidden ? "Unhide Problem" : "Hide Problem"}
+                  >
+                    {problem.hidden ? <EyeOff size={14} /> : <Eye size={14} />}
+                  </button>
                   <Link href={`/admin/problems/edit/${problem.id}`} className="p-3 bg-slate-900 text-white rounded-xl hover:bg-orange-500 transition-all">
                     <Edit2 size={14} />
                   </Link>

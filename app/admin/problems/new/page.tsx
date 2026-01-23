@@ -30,7 +30,8 @@ export default function NewProblemPage() {
     tags: [] as string[],
     time_limit: 1000,
     memory_limit: 256,
-    contest_id: null as string | null // Database link fix
+    contest_id: null as string | null,
+    hidden: false
   })
 
   const [testcases, setTestcases] = useState<any[]>([])
@@ -141,7 +142,15 @@ export default function NewProblemPage() {
             <div className="space-y-6">
               <div>
                 <label className="text-[10px] font-black uppercase text-slate-400 mb-3 block tracking-widest">Problem Title</label>
-                <input className="w-full bg-slate-50 border-none rounded-2xl px-6 py-5 font-bold text-lg outline-none" placeholder="Task Name..." onChange={(e) => setFormData({...formData, title: e.target.value})} />
+                <div className="flex gap-4">
+                  <input className="flex-1 bg-slate-50 border-none rounded-2xl px-6 py-5 font-bold text-lg outline-none" placeholder="Task Name..." onChange={(e) => setFormData({...formData, title: e.target.value})} />
+                  <div 
+                    onClick={() => setFormData({...formData, hidden: !formData.hidden})}
+                    className={`cursor-pointer px-6 rounded-2xl flex flex-col items-center justify-center border-2 transition-all min-w-[100px] ${formData.hidden ? "border-slate-900 bg-slate-900 text-white" : "border-slate-100 bg-white text-slate-300 hover:border-slate-300"}`}
+                  >
+                     <span className="text-[10px] font-black uppercase tracking-widest">{formData.hidden ? "HIDDEN" : "VISIBLE"}</span>
+                  </div>
+                </div>
               </div>
               
               <div className="grid grid-cols-2 gap-6">
