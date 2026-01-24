@@ -1,8 +1,8 @@
 "use client"
 
+import { useState, useEffect } from "react"
 import { User } from "lucide-react"
 import { cn } from "@/lib/utils"
-import { useState } from "react"
 
 interface UserAvatarProps {
   avatarUrl?: string | null
@@ -26,6 +26,11 @@ export default function UserAvatar({
 }: UserAvatarProps) {
   const [imageError, setImageError] = useState(false)
   const sizeClass = sizeClasses[size]
+
+  // Reset error state when URL changes (e.g., after upload)
+  useEffect(() => {
+    setImageError(false)
+  }, [avatarUrl])
   
   // If avatar URL exists and hasn't errored out, show the image
   if (avatarUrl && !imageError) {

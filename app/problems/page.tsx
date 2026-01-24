@@ -49,7 +49,7 @@ export default function UserProblemListPage() {
         
         {/* Header Title Section */}
         <div className="mb-12 space-y-4">
-          <h1 className="text-6xl font-black text-slate-900 tracking-tighter uppercase italic">
+          <h1 className="text-6xl font-black text-slate-900 tracking-tighter uppercase ">
             Algorithm <span className="text-orange-500 underline decoration-black underline-offset-8">Bank</span>
           </h1>
           <p className="text-slate-400 font-bold uppercase text-[10px] tracking-[0.4em]">
