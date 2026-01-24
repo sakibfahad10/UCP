@@ -221,7 +221,7 @@ export default function EditProblemPage({ params }: { params: Promise<{ id: stri
             </div>
           </div>
 
-          <div className="bg-white border border-slate-100 p-8 rounded-[3rem] shadow-sm space-y-6 italic">
+          <div className="bg-white border border-slate-100 p-8 rounded-[3rem] shadow-sm space-y-6">
              <div className="flex items-center gap-3 text-blue-500"><Box size={18} /><h4 className="text-[10px] font-black uppercase tracking-widest text-slate-900">Formating</h4></div>
              <textarea value={formData.input_format} placeholder="Input Format" className="w-full bg-slate-50 border-none rounded-xl p-4 text-[10px] font-bold outline-none h-24" onChange={(e) => setFormData({...formData, input_format: e.target.value})} />
              <textarea value={formData.output_format} placeholder="Output Format" className="w-full bg-slate-50 border-none rounded-xl p-4 text-[10px] font-bold outline-none h-24" onChange={(e) => setFormData({...formData, output_format: e.target.value})} />

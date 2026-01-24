@@ -130,8 +130,8 @@ export default function NewProblemPage() {
       </div>
 
       <div className="mb-12">
-        <h1 className="text-5xl font-black text-slate-900 tracking-tighter uppercase italic">Initialize Task</h1>
-        <p className="text-slate-400 font-bold uppercase text-[10px] tracking-[0.3em] mt-2 italic">Building New Algorithmic Logic</p>
+        <h1 className="text-5xl font-black text-slate-900 tracking-tighter uppercase">Initialize Task</h1>
+        <p className="text-slate-400 font-bold uppercase text-[10px] tracking-[0.3em] mt-2">Building New Algorithmic Logic</p>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-10">

@@ -52,7 +52,7 @@ export default function ContestStandings({ params }: { params: Promise<{ id: str
           <ChevronLeft size={16} /> Exit Arena
         </Link>
         <div className="text-center">
-           <h1 className="text-4xl font-black text-slate-900 uppercase italic tracking-tighter">Live Standings</h1>
+           <h1 className="text-4xl font-black text-slate-900 uppercase tracking-tighter">Live Standings</h1>
            <p className="text-[9px] font-bold text-slate-400 uppercase tracking-[0.3em]">Real-time Performance Matrix</p>
         </div>
         <div className="w-24" /> {/* Spacer */}

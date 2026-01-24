@@ -124,7 +124,7 @@ export default function Hero() {
                       <ChevronRight size={14} className="text-slate-500" />
                     </div>
                     <p className="text-teal-400 font-bold tracking-tight">Build your future.</p>
-                    <p className="text-slate-500 text-[11px] mt-1 italic">Execution time: 0.002s</p>
+                    <p className="text-slate-500 text-[11px] mt-1">Execution time: 0.002s</p>
                   </div>
                 </div>
               </div>

@@ -132,7 +132,7 @@ export default function AdminSubmissionsPage() {
              <div className="p-2.5 bg-slate-900 rounded-xl text-white shadow-lg shadow-slate-200">
                 <Activity size={24} />
              </div>
-             <h1 className="text-3xl font-black text-slate-900 tracking-tighter uppercase italic">Submission Monitor</h1>
+             <h1 className="text-3xl font-black text-slate-900 tracking-tighter uppercase">Submission Monitor</h1>
            </div>
            <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest pl-1">Global Judge Overview • {totalCount} records found</p>
         </div>
@@ -250,7 +250,7 @@ export default function AdminSubmissionsPage() {
                        </div>
                        <div>
                          <p className="text-xs font-black text-slate-800">{sub.profiles?.full_name || "Unknown"}</p>
-                         <p className="text-[9px] font-bold text-slate-400 lowercase italic">@{sub.profiles?.username || "anon"}</p>
+                         <p className="text-[9px] font-bold text-slate-400 lowercase">@{sub.profiles?.username || "anon"}</p>
                        </div>
                     </div>
                   </td>

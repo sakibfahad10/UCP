@@ -82,7 +82,7 @@ export default function LeaderboardSystem() {
                 </div>
                 <div>
                   <p className="text-[10px] font-black uppercase tracking-widest text-orange-400">New Achievement</p>
-                  <p className="text-xs font-bold italic">A contender just solved a challenge!</p>
+                  <p className="text-xs font-bold">A contender just solved a challenge!</p>
                 </div>
                 <ArrowUpRight size={16} className="text-slate-500" />
               </div>
@@ -114,7 +114,7 @@ export default function LeaderboardSystem() {
 
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-8 mb-12">
           <div>
-            <h1 className="text-6xl font-black italic uppercase tracking-tighter text-slate-950 leading-none">
+            <h1 className="text-6xl font-black uppercase tracking-tighter text-slate-950 leading-none">
               The <span className="text-orange-500 underline decoration-slate-200 decoration-4">Grid</span>
             </h1>
             <p className="text-[9px] font-black text-slate-400 uppercase tracking-[0.4em] mt-4">Real-time Performance Metrics</p>
@@ -167,7 +167,7 @@ export default function LeaderboardSystem() {
                 {filteredStandings.map((user, index) => (
                   <tr key={user.id} className="hover:bg-slate-50/50 transition-all group">
                     <td className="px-10 py-8 text-center">
-                      <span className={`text-lg font-black italic ${index < 3 ? 'text-orange-500' : 'text-slate-200'}`}>
+                      <span className={`text-lg font-black ${index < 3 ? 'text-orange-500' : 'text-slate-200'}`}>
                         {index + 1}
                       </span>
                     </td>
@@ -180,7 +180,7 @@ export default function LeaderboardSystem() {
                           className="w-12 h-12 rounded-2xl border border-slate-100 group-hover:border-orange-200 transition-colors"
                         />
                         <div>
-                          <p className="text-sm font-black uppercase italic text-slate-800 tracking-tight">{user.username}</p>
+                          <p className="text-sm font-black uppercase text-slate-800 tracking-tight">{user.username}</p>
                           <p className="text-[8px] font-black text-slate-400 uppercase tracking-widest">Ranked Member</p>
                         </div>
                       </div>

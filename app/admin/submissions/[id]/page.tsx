@@ -60,14 +60,14 @@ export default function SubmissionDetailsPage() {
   if (loading) return (
     <div className="min-h-screen flex flex-col items-center justify-center space-y-4">
       <Loader2 className="animate-spin text-orange-500" size={40} />
-      <p className="text-[10px] font-black uppercase tracking-widest text-slate-400 italic">Accessing Code Vault...</p>
+      <p className="text-[10px] font-black uppercase tracking-widest text-slate-400">Accessing Code Vault...</p>
     </div>
   )
 
   if (!submission) return (
     <div className="min-h-screen flex flex-col items-center justify-center space-y-6">
       <AlertCircle className="text-rose-500" size={60} />
-      <h2 className="text-2xl font-black text-slate-900 uppercase italic tracking-tighter">Record Nullified</h2>
+      <h2 className="text-2xl font-black text-slate-900 uppercase tracking-tighter">Record Nullified</h2>
       <button onClick={() => router.back()} className="px-8 py-4 bg-slate-900 text-white rounded-[2rem] font-black text-[10px] uppercase tracking-[0.2em]">
         Return to Safety
       </button>
@@ -88,9 +88,9 @@ export default function SubmissionDetailsPage() {
               }`}>
                 {submission.status || 'Pending'}
               </span>
-              <span className="text-[10px] font-black text-slate-300 uppercase tracking-tighter italic">ID: {submission.id.toString().slice(0, 8)}</span>
+              <span className="text-[10px] font-black text-slate-300 uppercase tracking-tighter">ID: {submission.id.toString().slice(0, 8)}</span>
           </div>
-          <h1 className="text-5xl font-black text-slate-900 tracking-tighter uppercase italic leading-tight">
+          <h1 className="text-5xl font-black text-slate-900 tracking-tighter uppercase leading-tight">
             {submission.problems?.title || "Problem Details Restricted"}
           </h1>
         </div>
@@ -101,27 +101,27 @@ export default function SubmissionDetailsPage() {
            <div className="w-14 h-14 bg-slate-50 rounded-2xl flex items-center justify-center text-slate-400"><User size={28}/></div>
            <div>
               <p className="text-[8px] font-black text-slate-400 uppercase tracking-widest mb-1">Author</p>
-              <p className="text-slate-900 text-base italic font-bold">{submission.profiles?.full_name || 'System User'}</p>
+              <p className="text-slate-900 text-base font-bold">{submission.profiles?.full_name || 'System User'}</p>
            </div>
         </div>
         <div className="p-8 bg-white border border-slate-100 rounded-[3rem] flex items-center gap-5">
            <div className="w-14 h-14 bg-slate-50 rounded-2xl flex items-center justify-center text-slate-400"><Clock size={28}/></div>
            <div>
               <p className="text-[8px] font-black text-slate-400 uppercase tracking-widest mb-1">Execution</p>
-              <p className="text-slate-900 text-base italic font-bold uppercase">{submission.execution_time || '0'} ms</p>
+              <p className="text-slate-900 text-base font-bold uppercase">{submission.execution_time || '0'} ms</p>
            </div>
         </div>
         <div className="p-8 bg-white border border-slate-100 rounded-[3rem] flex items-center gap-5">
            <div className="w-14 h-14 bg-slate-50 rounded-2xl flex items-center justify-center text-slate-400"><Code2 size={28}/></div>
            <div>
               <p className="text-[8px] font-black text-slate-400 uppercase tracking-widest mb-1">Environment</p>
-              <p className="text-slate-900 text-base italic font-bold uppercase">{submission.language || 'Code'}</p>
+              <p className="text-slate-900 text-base font-bold uppercase">{submission.language || 'Code'}</p>
            </div>
         </div>
       </div>
 
       <div className="space-y-4">
-        <h3 className="px-6 text-[10px] font-black text-slate-400 uppercase tracking-[0.3em] flex items-center gap-2 italic">
+        <h3 className="px-6 text-[10px] font-black text-slate-400 uppercase tracking-[0.3em] flex items-center gap-2">
           <Terminal size={14} className="text-orange-500" /> Source Manifest
         </h3>
         <div className="bg-[#0f172a] rounded-[3rem] p-10 shadow-2xl border border-slate-800 relative group overflow-hidden">

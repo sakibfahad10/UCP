@@ -100,7 +100,7 @@ export default function PublicProfilePage() {
       <div className="w-20 h-20 bg-slate-50 rounded-full flex items-center justify-center mb-6">
         <UserIcon className="text-slate-300" size={40} />
       </div>
-      <h1 className="text-2xl font-black text-slate-900 uppercase italic">User Not Found</h1>
+      <h1 className="text-2xl font-black text-slate-900 uppercase">User Not Found</h1>
       <p className="text-slate-400 text-sm mt-2 mb-8 uppercase font-bold tracking-tighter">The terminal you are looking for does not exist.</p>
       <button onClick={() => router.back()} className="flex items-center gap-2 text-orange-500 font-black uppercase text-xs tracking-widest underline underline-offset-8">
         <ArrowLeft size={16}/> Return to Base
@@ -135,7 +135,7 @@ export default function PublicProfilePage() {
             
             <div className="flex-1 text-center md:text-left">
               <div className="flex flex-col md:flex-row md:items-center gap-4 mb-4">
-                <h1 className="text-5xl font-black text-white italic uppercase tracking-tighter leading-none">
+                <h1 className="text-5xl font-black text-white uppercase tracking-tighter leading-none">
                   {profile.display_name || profile.username}
                 </h1>
                 <div className="px-4 py-1.5 bg-orange-500 text-white text-[10px] font-black rounded-full uppercase tracking-[0.2em]">
@@ -243,17 +243,17 @@ export default function PublicProfilePage() {
               <div className="grid grid-cols-2 gap-4">
                 <div className="bg-slate-50 p-6 rounded-3xl border border-slate-100">
                   <p className="text-[8px] font-black text-slate-400 uppercase tracking-widest mb-1">Score</p>
-                  <p className="text-2xl font-black text-slate-900 italic tracking-tighter">{profile.rank_points || 0}</p>
+                  <p className="text-2xl font-black text-slate-900 tracking-tighter">{profile.rank_points || 0}</p>
                 </div>
                 <div className="bg-slate-50 p-6 rounded-3xl border border-slate-100">
                   <p className="text-[8px] font-black text-slate-400 uppercase tracking-widest mb-1">Global</p>
-                  <p className="text-2xl font-black text-slate-900 italic tracking-tighter">#42</p>
+                  <p className="text-2xl font-black text-slate-900 tracking-tighter">#42</p>
                 </div>
               </div>
 
               <div className="mt-8 space-y-4">
                  {profile.bio && (
-                   <p className="text-sm font-medium text-slate-600 italic border-l-4 border-orange-500 pl-4 py-1">
+                   <p className="text-sm font-medium text-slate-600 border-l-4 border-orange-500 pl-4 py-1">
                      "{profile.bio}"
                    </p>
                  )}
@@ -295,11 +295,11 @@ export default function PublicProfilePage() {
                 {submissions.length > 0 ? submissions.map((sub) => (
                   <div key={sub.id} className="group flex items-center justify-between p-6 bg-slate-50 hover:bg-white rounded-3xl border border-transparent hover:border-slate-200 hover:shadow-lg transition-all">
                     <div className="flex items-center gap-5">
-                      <div className={`w-12 h-12 rounded-2xl flex items-center justify-center font-black italic text-xs ${sub.status === 'AC' ? 'bg-emerald-50 text-emerald-600' : 'bg-rose-50 text-rose-600'}`}>
+                      <div className={`w-12 h-12 rounded-2xl flex items-center justify-center font-black text-xs ${sub.status === 'AC' ? 'bg-emerald-50 text-emerald-600' : 'bg-rose-50 text-rose-600'}`}>
                         {sub.status}
                       </div>
                       <div>
-                        <p className="text-sm font-black uppercase italic text-slate-900 tracking-tight">Challenge #{sub.id.slice(0, 4)}</p>
+                        <p className="text-sm font-black uppercase text-slate-900 tracking-tight">Challenge #{sub.id.slice(0, 4)}</p>
                         <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">{sub.contests?.title || "Global Arena"}</p>
                       </div>
                     </div>

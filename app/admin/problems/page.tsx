@@ -98,7 +98,7 @@ export default function ProblemBankPage() {
       {/* --- Section 1: Header & Stats --- */}
       <div className="flex flex-col xl:flex-row justify-between items-start xl:items-end gap-6">
         <div>
-          <h1 className="text-5xl font-black text-slate-900 tracking-tighter uppercase italic leading-none">Problem Bank</h1>
+          <h1 className="text-5xl font-black text-slate-900 tracking-tighter uppercase leading-none">Problem Bank</h1>
           <div className="flex items-center gap-4 mt-4">
              <div className="flex items-center gap-2 bg-slate-900 text-[10px] font-black text-white px-3 py-1.5 rounded-full uppercase tracking-widest shadow-lg shadow-slate-200">
                 <BarChart3 size={12} className="text-orange-500" />

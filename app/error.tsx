@@ -21,7 +21,7 @@ export default function GlobalError({
         <AlertTriangle className="text-rose-500" size={32} />
       </div>
       
-      <h1 className="text-4xl font-black text-slate-900 uppercase italic tracking-tighter mb-4">
+      <h1 className="text-4xl font-black text-slate-900 uppercase tracking-tighter mb-4">
         Logic Error Detected
       </h1>
       

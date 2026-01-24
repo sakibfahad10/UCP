@@ -126,7 +126,7 @@ export default function ContestProblemSolver({ problem, contestId, onBack }: Con
         {/* Left: Problem Statement */}
         <div className="w-1/3 flex flex-col bg-white border border-slate-100 rounded-[2rem] overflow-hidden shadow-sm">
           <div className="p-8 overflow-y-auto custom-scrollbar">
-            <h1 className="text-3xl font-black text-slate-900 uppercase italic tracking-tighter mb-2">{problem.title}</h1>
+            <h1 className="text-3xl font-black text-slate-900 uppercase tracking-tighter mb-2">{problem.title}</h1>
             <div className="flex items-center gap-3 mb-8">
               <span className={`px-3 py-1 rounded-lg text-[9px] font-black uppercase tracking-widest ${
                 problem.difficulty === 'Easy' ? 'bg-emerald-100 text-emerald-700' : 
@@ -253,7 +253,7 @@ export default function ContestProblemSolver({ problem, contestId, onBack }: Con
                     </div>
                   ) : (
                     <div className="h-full flex items-center justify-center">
-                      <span className="text-[10px] text-slate-600 font-black uppercase tracking-[0.4em] italic">Awaiting Deployment...</span>
+                      <span className="text-[10px] text-slate-600 font-black uppercase tracking-[0.4em]">Awaiting Deployment...</span>
                     </div>
                   )}
                 </div>

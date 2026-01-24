@@ -106,7 +106,7 @@ export default function ContestArenaPage() {
 
   if (!contest) return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-slate-50">
-      <h2 className="text-2xl font-black text-slate-900 uppercase italic">Arena Not Found</h2>
+      <h2 className="text-2xl font-black text-slate-900 uppercase">Arena Not Found</h2>
       <Link href="/contests" className="mt-4 text-orange-500 font-bold uppercase text-[10px] tracking-widest hover:underline">
         Back to Lobby
       </Link>
@@ -155,7 +155,7 @@ export default function ContestArenaPage() {
                    )}
                  </div>
 
-                 <h1 className="text-5xl md:text-6xl font-black text-slate-900 uppercase italic tracking-tighter mb-6 leading-tight">
+                 <h1 className="text-5xl md:text-6xl font-black text-slate-900 uppercase tracking-tighter mb-6 leading-tight">
                    {contest.title}
                  </h1>
                  
@@ -164,7 +164,7 @@ export default function ContestArenaPage() {
                      <Timer size={14} className="text-orange-500" />
                      {status === "Upcoming" ? "Time Until Start" : status === "Live" ? "Time Remaining" : "Status"}
                    </span>
-                   <span className="text-4xl font-black text-slate-900 italic tracking-tighter">
+                   <span className="text-4xl font-black text-slate-900 tracking-tighter">
                      {timeLeft}
                    </span>
                  </div>
@@ -211,7 +211,7 @@ export default function ContestArenaPage() {
             <div className="bg-slate-900 rounded-[2.5rem] p-8 text-white shadow-xl relative overflow-hidden">
                <div className="absolute top-0 right-0 w-32 h-32 bg-orange-500/10 rounded-full blur-2xl -mr-16 -mt-16" />
                
-               <h3 className="text-xl font-black italic uppercase mb-8 flex items-center gap-2 relative z-10">
+               <h3 className="text-xl font-black uppercase mb-8 flex items-center gap-2 relative z-10">
                  <Zap className="text-orange-500" size={20}/> Quick Stats
                </h3>
                
@@ -220,7 +220,7 @@ export default function ContestArenaPage() {
                    <p className="text-[9px] font-black text-slate-400 uppercase tracking-widest mb-2">Total Participants</p>
                    <div className="flex items-center gap-3">
                      <Users size={20} className="text-orange-400" />
-                     <p className="text-2xl font-black italic">{contest.participants || 0}</p>
+                     <p className="text-2xl font-black">{contest.participants || 0}</p>
                    </div>
                  </div>
                  
@@ -228,7 +228,7 @@ export default function ContestArenaPage() {
                    <p className="text-[9px] font-black text-slate-400 uppercase tracking-widest mb-2">Number of Tasks</p>
                    <div className="flex items-center gap-3">
                      <Trophy size={20} className="text-orange-400" />
-                     <p className="text-2xl font-black italic">{contest.problems?.length || 0}</p>
+                     <p className="text-2xl font-black">{contest.problems?.length || 0}</p>
                    </div>
                  </div>
 

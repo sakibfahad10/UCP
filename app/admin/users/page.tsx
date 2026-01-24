@@ -98,7 +98,7 @@ export default function UserControlPage() {
       {/* Header */}
       <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-6">
         <div>
-          <h1 className="text-5xl font-black text-slate-900 tracking-tighter uppercase italic">User Registry</h1>
+          <h1 className="text-5xl font-black text-slate-900 tracking-tighter uppercase">User Registry</h1>
           <p className="text-[10px] font-black text-slate-400 uppercase tracking-[0.3em] mt-2">Manage platform access and permissions</p>
         </div>
         <button onClick={fetchUsers} className="flex items-center gap-2 px-6 py-3 bg-white border border-slate-100 rounded-2xl text-[10px] font-black uppercase tracking-widest text-slate-600 hover:bg-slate-50 transition-all shadow-sm">
@@ -188,7 +188,7 @@ export default function UserControlPage() {
                 </div>
                 <div className="flex items-center gap-2 text-slate-400">
                   <Mail size={14} className="shrink-0" />
-                  <span className="text-xs font-bold truncate italic">{user.email || 'No email attached'}</span>
+                  <span className="text-xs font-bold truncate">{user.email || 'No email attached'}</span>
                 </div>
               </div>
 

@@ -57,7 +57,7 @@ export default function UpcomingContests() {
         <div className="flex flex-col md:flex-row items-start md:items-end justify-between mb-16 gap-8">
           <div className="max-w-xl">
             <span className="inline-block px-4 py-1.5 rounded-xl bg-orange-50 text-[10px] font-black text-orange-600 tracking-[0.2em] uppercase mb-4 border border-orange-100">Battlegrounds</span>
-            <h1 className="text-5xl md:text-7xl font-black leading-[0.9] tracking-tighter text-slate-900 uppercase italic">
+            <h1 className="text-5xl md:text-7xl font-black leading-[0.9] tracking-tighter text-slate-900 uppercase">
               Upcoming <span className="text-orange-500 underline decoration-slate-200">Arenas</span>
             </h1>
             <p className="mt-6 text-slate-500 font-medium leading-relaxed">
@@ -96,12 +96,12 @@ export default function UpcomingContests() {
                       {new Date(c.start_time).toLocaleString(undefined, { month: 'short', day: 'numeric', hour: 'numeric', minute: '2-digit' })}
                     </span>
                   </div>
-                  <div className="px-3 py-1 bg-slate-900 text-white text-[9px] font-black uppercase tracking-tighter italic rounded-lg">
+                  <div className="px-3 py-1 bg-slate-900 text-white text-[9px] font-black uppercase tracking-tighter rounded-lg">
                     {c.max_participants > 0 ? 'Limited' : 'Open'}
                   </div>
                 </div>
 
-                <h3 className="text-2xl font-black text-slate-900 mb-2 leading-none uppercase italic group-hover:text-orange-600 transition-colors">
+                <h3 className="text-2xl font-black text-slate-900 mb-2 leading-none uppercase group-hover:text-orange-600 transition-colors">
                   {c.title}
                 </h3>
                 <p className="text-xs text-slate-400 mb-8 font-medium leading-relaxed line-clamp-2">
@@ -115,7 +115,7 @@ export default function UpcomingContests() {
                         <Users size={14} />
                       </div>
                     ))}
-                    <div className="w-9 h-9 rounded-2xl bg-orange-50 border-2 border-white flex items-center justify-center text-orange-500 text-[10px] font-black italic">
+                    <div className="w-9 h-9 rounded-2xl bg-orange-50 border-2 border-white flex items-center justify-center text-orange-500 text-[10px] font-black">
                       +
                     </div>
                   </div>
@@ -154,12 +154,12 @@ function Countdown({ start, now }: { start: string; now: number }) {
   const seconds = Math.floor((diff / 1000) % 60)
 
   if (diff === 0) {
-    return <div className="text-[10px] font-black text-emerald-500 uppercase italic">Live Now</div>
+    return <div className="text-[10px] font-black text-emerald-500 uppercase">Live Now</div>
   }
 
   return (
     <div className="text-right">
-      <div className="text-sm font-black text-slate-900 italic tracking-tighter leading-none">
+      <div className="text-sm font-black text-slate-900 tracking-tighter leading-none">
         {days > 0 ? `${days}d ` : ""}{pad(hours)}:{pad(minutes)}:{pad(seconds)}
       </div>
       <div className="text-[9px] font-black text-slate-300 uppercase tracking-widest mt-1">Starting In</div>

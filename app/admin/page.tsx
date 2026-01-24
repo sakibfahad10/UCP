@@ -73,7 +73,7 @@ export default function AdminDashboard() {
         <div className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
           <div className="flex items-center gap-4">
             <div className="w-10 h-10 bg-slate-900 rounded-xl flex items-center justify-center">
-              <span className="text-white font-black text-xs italic">UCP</span>
+              <span className="text-white font-black text-xs">UCP</span>
             </div>
             <div>
               <h1 className="text-sm font-black uppercase tracking-widest text-slate-900">Admin Console</h1>
@@ -168,7 +168,7 @@ export default function AdminDashboard() {
               <div className="relative z-10">
                 <Timer size={24} className="text-orange-400 mb-6" />
                 <p className="text-[10px] font-bold text-slate-500 uppercase tracking-widest mb-1">Global Leaderboard</p>
-                <h4 className="text-xl font-black uppercase italic tracking-tight mb-6">Top Architect</h4>
+                <h4 className="text-xl font-black uppercase tracking-tight mb-6">Top Architect</h4>
                 <div className="pt-6 border-t border-white/10">
                    <p className="text-xs font-bold text-slate-400 uppercase mb-2">Syncing Ranking...</p>
                    <Link href="/leaderboard" className="inline-flex items-center gap-2 text-[10px] font-black text-orange-500 uppercase tracking-widest hover:text-white transition-colors">

@@ -96,7 +96,7 @@ export default function ContestProblemsPage() {
         <div className="inline-flex items-center justify-center w-20 h-20 bg-white rounded-full border border-slate-100 mb-8 shadow-sm">
           <Lock className="text-orange-500" size={32} />
         </div>
-        <h2 className="text-4xl font-black text-slate-900 uppercase italic tracking-tighter mb-4">Registration Required</h2>
+        <h2 className="text-4xl font-black text-slate-900 uppercase tracking-tighter mb-4">Registration Required</h2>
         <p className="text-slate-500 font-medium max-w-md mx-auto mb-8">
           You must register for this contest to view the problem set and submit solutions.
         </p>
@@ -118,7 +118,7 @@ export default function ContestProblemsPage() {
         <div className="inline-flex items-center justify-center w-20 h-20 bg-white rounded-full border border-slate-100 mb-8 shadow-sm">
           <Lock className="text-orange-500" size={32} />
         </div>
-        <h2 className="text-4xl font-black text-slate-900 uppercase italic tracking-tighter mb-4">Arena is Locked</h2>
+        <h2 className="text-4xl font-black text-slate-900 uppercase tracking-tighter mb-4">Arena is Locked</h2>
         <p className="text-slate-500 font-medium max-w-md mx-auto">
           The problem set for this contest will be revealed once the battle begins. Prepare your station.
         </p>
@@ -141,7 +141,7 @@ export default function ContestProblemsPage() {
         ) : (
           <>
             <div className="mb-12">
-              <h1 className="text-4xl font-black text-slate-900 uppercase italic tracking-tighter mb-2">Problem Set</h1>
+              <h1 className="text-4xl font-black text-slate-900 uppercase tracking-tighter mb-2">Problem Set</h1>
               <p className="text-slate-400 text-[10px] font-black uppercase tracking-[0.3em]">Deploy your solutions to the core systems</p>
             </div>
 
@@ -153,11 +153,11 @@ export default function ContestProblemsPage() {
                   className="bg-white border border-slate-100 p-8 rounded-[2.5rem] hover:shadow-2xl transition-all group flex items-center justify-between text-left"
                 >
                   <div className="flex items-center gap-6">
-                    <div className="w-12 h-12 bg-slate-50 rounded-2xl flex items-center justify-center text-slate-900 font-black italic group-hover:bg-orange-500 group-hover:text-white transition-all">
+                    <div className="w-12 h-12 bg-slate-50 rounded-2xl flex items-center justify-center text-slate-900 font-black group-hover:bg-orange-500 group-hover:text-white transition-all">
                       {String.fromCharCode(65 + index)}
                     </div>
                     <div>
-                      <h3 className="text-xl font-black text-slate-900 uppercase italic group-hover:text-orange-600 transition-colors">
+                      <h3 className="text-xl font-black text-slate-900 uppercase group-hover:text-orange-600 transition-colors">
                         {problem.title}
                       </h3>
                       <div className="flex items-center gap-3 mt-1">

@@ -112,7 +112,7 @@ export default function ContestsContent() {
                             <Calendar size={12}/> {new Date(contest.start_time).toLocaleDateString()}
                           </span>
                         </div>
-                        <h3 className="text-2xl font-black text-gray-900 mb-2 group-hover:text-orange-500 transition-colors uppercase italic">{contest.title}</h3>
+                        <h3 className="text-2xl font-black text-gray-900 mb-2 group-hover:text-orange-500 transition-colors uppercase">{contest.title}</h3>
                         <p className="text-gray-500 text-sm line-clamp-1">{contest.description}</p>
                       </div>
 
@@ -120,7 +120,7 @@ export default function ContestsContent() {
                         <button className="bg-slate-900 text-white px-6 py-3 rounded-xl font-black uppercase text-[10px] tracking-widest hover:bg-orange-500 transition-colors">
                           Enter Arena
                         </button>
-                        <span className="text-[9px] font-black text-slate-300 uppercase italic">
+                        <span className="text-[9px] font-black text-slate-300 uppercase">
                           ID: {contest.id.slice(0,8)}...
                         </span>
                       </div>

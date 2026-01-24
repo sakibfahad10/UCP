@@ -61,7 +61,7 @@ export default function ContestSubmissionsPage() {
         <div className="inline-flex items-center justify-center w-20 h-20 bg-white rounded-full border border-slate-100 mb-8 shadow-sm">
           <Database className="text-orange-500" size={32} />
         </div>
-        <h2 className="text-4xl font-black text-slate-900 uppercase italic tracking-tighter mb-4">Registration Required</h2>
+        <h2 className="text-4xl font-black text-slate-900 uppercase tracking-tighter mb-4">Registration Required</h2>
         <p className="text-slate-500 font-medium max-w-md mx-auto mb-8">
           You must register for this contest to view your submission history.
         </p>
@@ -82,7 +82,7 @@ export default function ContestSubmissionsPage() {
       
       <main className="max-w-5xl mx-auto px-6 py-12">
         <div className="mb-12">
-          <h1 className="text-4xl font-black text-slate-900 uppercase italic tracking-tighter mb-2">My Submissions</h1>
+          <h1 className="text-4xl font-black text-slate-900 uppercase tracking-tighter mb-2">My Submissions</h1>
           <p className="text-slate-400 text-[10px] font-black uppercase tracking-[0.3em]">History of your tactical deployments in this arena</p>
         </div>
 
@@ -112,7 +112,7 @@ export default function ContestSubmissionsPage() {
                     </div>
                   </td>
                   <td className="px-6 py-4">
-                    <p className="text-xs font-black text-slate-800 uppercase italic">
+                    <p className="text-xs font-black text-slate-800 uppercase">
                       {sub.problems?.title || "Unknown Task"}
                     </p>
                   </td>

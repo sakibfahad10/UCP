@@ -50,7 +50,7 @@ export default function ProblemPicker({ selectedIds, onSelectionChange }: {
       {/* Selected Problems List */}
       <div className="flex flex-wrap gap-2">
         {selectedIds.length === 0 ? (
-          <p className="text-xs font-bold text-slate-300 italic uppercase">No problems linked to this arena sequence</p>
+          <p className="text-xs font-bold text-slate-300 uppercase">No problems linked to this arena sequence</p>
         ) : (
           selectedIds.map(id => (
             <div key={id} className="flex items-center gap-2 px-3 py-1.5 bg-orange-50 border border-orange-100 rounded-lg text-orange-700 text-[10px] font-black uppercase">
@@ -68,7 +68,7 @@ export default function ProblemPicker({ selectedIds, onSelectionChange }: {
             <div className="p-8 border-b border-slate-50 flex items-center justify-between">
               <div className="flex items-center gap-3">
                 <Database className="text-orange-500" size={20} />
-                <h3 className="text-lg font-black uppercase italic tracking-tight">Problem Bank</h3>
+                <h3 className="text-lg font-black uppercase tracking-tight">Problem Bank</h3>
               </div>
               <button onClick={() => setIsOpen(false)} className="p-2 hover:bg-slate-100 rounded-full transition-all">
                 <X size={20} />
