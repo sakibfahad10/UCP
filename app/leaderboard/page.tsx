@@ -4,16 +4,14 @@
 import { useState, useEffect } from "react"
 import { createClient } from "@/lib/supabase/client"
 import Header from "@/components/header"
-import { 
-  Trophy, Search, Loader2, 
-  Globe, Zap, BellRing, 
-  ArrowUpRight
+import {
+  Trophy, Search, Loader2,
+  BellRing, ArrowUpRight
 } from "lucide-react"
 import { toast } from "sonner"
 import UserAvatar from "@/components/user-avatar"
 
 export default function LeaderboardSystem() {
-  const [activeTab, setActiveTab] = useState<"global" | "running">("global")
   const [standings, setStandings] = useState<any[]>([])
   const [loading, setLoading] = useState(true)
   const [searchQuery, setSearchQuery] = useState("")
@@ -112,28 +110,11 @@ export default function LeaderboardSystem() {
           <span className="text-[8px] font-black uppercase tracking-[0.2em] text-orange-600">Live Sync Active</span>
         </div>
 
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-8 mb-12">
-          <div>
-            <h1 className="text-6xl font-black uppercase tracking-tighter text-slate-950 leading-none">
-              The <span className="text-orange-500 underline decoration-slate-200 decoration-4">Grid</span>
-            </h1>
-            <p className="text-[9px] font-black text-slate-400 uppercase tracking-[0.4em] mt-4">Real-time Performance Metrics</p>
-          </div>
-
-          <div className="flex p-1.5 bg-slate-100 rounded-2xl">
-            <button 
-              onClick={() => setActiveTab("global")}
-              className={`flex items-center gap-2 px-6 py-3 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all ${activeTab === "global" ? "bg-white text-orange-600 shadow-sm" : "text-slate-400"}`}
-            >
-              <Globe size={14} /> Global
-            </button>
-            <button 
-              onClick={() => setActiveTab("running")}
-              className={`flex items-center gap-2 px-6 py-3 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all ${activeTab === "running" ? "bg-white text-orange-600 shadow-sm" : "text-slate-400"}`}
-            >
-              <Zap size={14} /> Running
-            </button>
-          </div>
+        <div className="mb-12">
+          <h1 className="text-6xl font-black uppercase tracking-tighter text-slate-950 leading-none">
+            The <span className="text-orange-500 underline decoration-slate-200 decoration-4">Grid</span>
+          </h1>
+          <p className="text-[9px] font-black text-slate-400 uppercase tracking-[0.4em] mt-4">Real-time Performance Metrics</p>
         </div>
 
         <div className="relative mb-8 max-w-md">
