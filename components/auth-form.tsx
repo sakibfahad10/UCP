@@ -100,8 +100,8 @@ export function AuthForm() {
               </div>
             </div>
           </div>
-          <h1 className="text-2xl font-black text-slate-900 mb-1 tracking-tight italic uppercase">UCP Portal</h1>
-          <p className="text-[10px] font-black uppercase text-gray-400 tracking-[0.3em] italic">Code • Compete • Conquer</p>
+          <h1 className="text-2xl font-black text-slate-900 mb-1 tracking-tight uppercase">UCP Portal</h1>
+          <p className="text-[10px] font-black uppercase text-gray-400 tracking-[0.3em]">Code • Compete • Conquer</p>
         </div>
 
         {/* Tab Switcher */}

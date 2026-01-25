@@ -33,7 +33,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
         <div className="p-8 border-b border-slate-50">
           <div className="flex items-center gap-3">
             <div className="w-10 h-10 bg-slate-900 rounded-xl flex items-center justify-center shadow-lg shadow-slate-200">
-              <span className="text-white font-black text-xs italic">UCP</span>
+              <span className="text-white font-black text-xs">UCP</span>
             </div>
             <div>
               <h2 className="text-sm font-black uppercase tracking-tight text-slate-900">Mainframe</h2>

@@ -73,7 +73,7 @@ export default function ProblemDetailsPage({ params }: { params: Promise<{ id: s
           <div className="lg:col-span-2 space-y-12">
             <section>
               <div className="flex items-center gap-4 mb-4">
-                <h1 className="text-5xl font-black text-slate-900 tracking-tighter uppercase italic">{problem.title}</h1>
+                <h1 className="text-5xl font-black text-slate-900 tracking-tighter uppercase">{problem.title}</h1>
                 <div className={`px-4 py-1 rounded-full text-[10px] font-black uppercase tracking-widest ${
                   problem.difficulty === 'Easy' ? 'bg-emerald-100 text-emerald-700' : 
                   problem.difficulty === 'Medium' ? 'bg-orange-100 text-orange-700' : 'bg-rose-100 text-rose-700'
@@ -143,7 +143,7 @@ export default function ProblemDetailsPage({ params }: { params: Promise<{ id: s
               <div className="w-20 h-20 bg-slate-50 rounded-full flex items-center justify-center mb-6">
                 <Code2 size={32} className="text-slate-900" />
               </div>
-              <h4 className="text-lg font-black text-slate-900 uppercase italic tracking-tighter mb-2">Ready to Code?</h4>
+              <h4 className="text-lg font-black text-slate-900 uppercase tracking-tighter mb-2">Ready to Code?</h4>
               <p className="text-xs text-slate-400 font-bold uppercase tracking-widest mb-8">Submit your solution to the judge</p>
               
               <Link 

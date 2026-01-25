@@ -41,7 +41,7 @@ export default function SubmissionHistory({ userId }: { userId: string }) {
   return (
     <div className="w-full space-y-4">
       <div className="flex items-center justify-between mb-6">
-        <h3 className="text-xl font-black uppercase italic text-slate-900 tracking-tighter">Submission Logs</h3>
+        <h3 className="text-xl font-black uppercase text-slate-900 tracking-tighter">Submission Logs</h3>
         <span className="px-3 py-1 bg-slate-100 rounded-full text-[10px] font-black text-slate-500 uppercase">
           Total: {submissions.length}
         </span>
@@ -62,7 +62,7 @@ export default function SubmissionHistory({ userId }: { userId: string }) {
             {submissions.map((sub) => (
               <tr key={sub.id} className="hover:bg-slate-50 transition-colors group">
                 <td className="px-6 py-4">
-                  <div className={`flex items-center gap-2 font-black text-xs uppercase italic ${
+                  <div className={`flex items-center gap-2 font-black text-xs uppercase ${
                     sub.status === 'Accepted' ? 'text-green-500' : 'text-red-500'
                   }`}>
                     {sub.status === 'Accepted' ? <CheckCircle2 size={16} /> : <XCircle size={16} />}

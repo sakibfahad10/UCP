@@ -117,7 +117,7 @@ export default function ProfilePage() {
                     <Globe className="w-4 h-4" /> <span>{user.website.replace(/^https?:\/\//, '')}</span>
                   </a>
                 ) : (
-                  <div className="flex items-center gap-3 text-slate-400 text-sm italic">
+                  <div className="flex items-center gap-3 text-slate-400 text-sm">
                     <Globe className="w-4 h-4" /> <span>No website added</span>
                   </div>
                 )}

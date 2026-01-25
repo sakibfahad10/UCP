@@ -16,7 +16,7 @@ export default function ArenaLoading() {
           </div>
         </div>
         
-        <h2 className="text-3xl font-black text-slate-950 uppercase italic tracking-tighter mb-2">
+        <h2 className="text-3xl font-black text-slate-950 uppercase tracking-tighter mb-2">
           Entering <span className="text-orange-500">Arena</span>
         </h2>
         <div className="flex items-center gap-2">

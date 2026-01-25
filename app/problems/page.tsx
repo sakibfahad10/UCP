@@ -96,7 +96,7 @@ export default function UserProblemListPage() {
         ) : filtered.length === 0 ? (
           <div className="text-center py-24 bg-slate-50 rounded-[3rem] border border-dashed border-slate-200">
              <h3 className="text-sm font-black text-slate-900 uppercase tracking-widest">No Problems Found</h3>
-             <p className="text-[10px] font-bold text-slate-400 uppercase mt-2 italic">Try changing your filters or search query</p>
+             <p className="text-[10px] font-bold text-slate-400 uppercase mt-2">Try changing your filters or search query</p>
           </div>
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -133,7 +133,7 @@ export default function UserProblemListPage() {
                 <div className="flex items-center justify-between mt-auto pt-6 border-t border-slate-50">
                   <div className="flex flex-col">
                      <span className="text-[8px] font-black text-slate-400 uppercase tracking-widest">Potential Points</span>
-                     <span className="text-lg font-black text-slate-900 italic">{problem.points || 100} XP</span>
+                     <span className="text-lg font-black text-slate-900">{problem.points || 100} XP</span>
                   </div>
                   <div className="flex items-center gap-2 px-4 py-2 bg-slate-900 text-white rounded-xl text-[8px] font-black uppercase group-hover:bg-orange-600 transition-all">
                     Solve <ChevronRight size={12} />

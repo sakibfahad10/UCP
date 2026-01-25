@@ -44,7 +44,7 @@ export default function AdminDashboard() {
       <div className="max-w-7xl mx-auto px-8 py-12">
         <div className="flex justify-between items-center mb-12">
           <div>
-            <h1 className="text-4xl font-black tracking-tighter uppercase italic text-slate-900">
+            <h1 className="text-4xl font-black tracking-tighter uppercase text-slate-900">
               Admin <span className="text-orange-600">Console</span>
             </h1>
             <p className="text-slate-400 font-bold text-[10px] uppercase tracking-widest mt-1">Management Hub</p>
@@ -72,7 +72,7 @@ export default function AdminDashboard() {
                     <span className="bg-slate-100 text-slate-500 px-2 py-0.5 rounded text-[8px] font-black uppercase">{c.type}</span>
                     <span className="bg-orange-100 text-orange-600 px-2 py-0.5 rounded text-[8px] font-black uppercase">{c.visibility}</span>
                   </div>
-                  <h3 className="text-xl font-black text-slate-800 uppercase italic">{c.title}</h3>
+                  <h3 className="text-xl font-black text-slate-800 uppercase">{c.title}</h3>
                   <p className="text-slate-400 text-[10px] font-bold mt-1 tracking-widest">START: {new Date(c.start_time).toLocaleString()}</p>
                 </div>
                 <div className="flex gap-2">
@@ -92,10 +92,10 @@ export default function AdminDashboard() {
               {questions.map(q => (
                 <div key={q.id} className="bg-white border border-slate-200 p-6 rounded-[2rem] shadow-sm">
                   <p className="text-[8px] font-black text-orange-500 uppercase mb-2">Ref: {q.competitions?.title}</p>
-                  <p className="text-xs font-bold text-slate-700 italic mb-4">"{q.question}"</p>
+                  <p className="text-xs font-bold text-slate-700 mb-4">"{q.question}"</p>
                   
                   {q.answer ? (
-                    <div className="bg-emerald-50 p-3 rounded-xl text-[11px] text-emerald-700 font-medium italic border border-emerald-100">
+                    <div className="bg-emerald-50 p-3 rounded-xl text-[11px] text-emerald-700 font-medium border border-emerald-100">
                       Ans: {q.answer}
                     </div>
                   ) : (

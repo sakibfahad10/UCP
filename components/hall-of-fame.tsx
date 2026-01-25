@@ -75,7 +75,7 @@ export default function HallOfFame() {
         <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-orange-100 text-orange-600 text-[10px] font-black uppercase tracking-widest mb-4">
            <Sparkles size={12} /> Elite Division
         </div>
-        <h2 className="text-5xl md:text-6xl font-black text-slate-900 mb-4 tracking-tighter uppercase italic">
+        <h2 className="text-5xl md:text-6xl font-black text-slate-900 mb-4 tracking-tighter uppercase">
           Hall of Fame
         </h2>
         <p className="text-slate-500 font-medium text-lg max-w-2xl mx-auto">

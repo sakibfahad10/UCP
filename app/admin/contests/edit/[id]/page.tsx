@@ -139,7 +139,7 @@ export default function EditContestPage() {
       </div>
 
       <div className="mb-10">
-        <h1 className="text-4xl font-black text-slate-900 tracking-tighter uppercase italic leading-none">Modify Arena</h1>
+        <h1 className="text-4xl font-black text-slate-900 tracking-tighter uppercase leading-none">Modify Arena</h1>
         <p className="text-slate-400 font-bold uppercase text-[9px] mt-2 tracking-widest">Database ID: {id}</p>
       </div>
 
@@ -266,7 +266,7 @@ export default function EditContestPage() {
             <div className="p-5 bg-slate-50 rounded-2xl flex items-center justify-between cursor-pointer" onClick={() => setFormData({...formData, allow_teams: !formData.allow_teams})}>
               <div>
                 <p className="text-[9px] font-black text-slate-400 uppercase mb-1">Team Mode</p>
-                <p className={`text-sm font-black uppercase italic ${formData.allow_teams ? "text-green-600" : "text-slate-900"}`}>{formData.allow_teams ? "Enabled" : "Individual Only"}</p>
+                <p className={`text-sm font-black uppercase ${formData.allow_teams ? "text-green-600" : "text-slate-900"}`}>{formData.allow_teams ? "Enabled" : "Individual Only"}</p>
               </div>
               <BookOpen size={20} className={formData.allow_teams ? "text-green-500" : "text-slate-300"} />
             </div>

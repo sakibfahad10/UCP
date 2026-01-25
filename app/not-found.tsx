@@ -12,7 +12,7 @@ export default function NotFound() {
           <Search className="text-orange-500" size={40} />
         </div>
 
-        <h1 className="text-7xl font-black text-slate-900 uppercase italic tracking-tighter mb-4">
+        <h1 className="text-7xl font-black text-slate-900 uppercase tracking-tighter mb-4">
           404: Lost in Matrix
         </h1>
         

@@ -206,7 +206,7 @@ export default function VSCodeStyleIDE({ params }: { params: Promise<{ id: strin
                       <pre className="text-xs text-[#dcdcdc] bg-[#1e1e1e] p-3 rounded border border-[#333333] whitespace-pre-wrap">{output.output || "No output."}</pre>
                     </div>
                   ) : (
-                    <span className="text-xs text-[#444444] italic">Run code to initialize terminal output.</span>
+                    <span className="text-xs text-[#444444]">Run code to initialize terminal output.</span>
                   )}
                 </div>
               )}

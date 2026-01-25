@@ -88,7 +88,7 @@ export default function ProblemSubmission({ problem }: { problem: any }) {
             {/* Note Card */}
             <div className="p-5 bg-blue-50/50 rounded-2xl border border-blue-100/50 flex gap-3">
                <AlertCircle size={16} className="text-blue-500 shrink-0 mt-0.5" />
-               <p className="text-[11px] font-bold text-blue-600/80 leading-relaxed italic">
+               <p className="text-[11px] font-bold text-blue-600/80 leading-relaxed">
                  "Optimization tip: Use fast I/O for large datasets to stay within time constraints."
                </p>
             </div>

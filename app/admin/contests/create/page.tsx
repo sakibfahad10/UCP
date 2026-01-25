@@ -85,7 +85,7 @@ export default function NewContestPage() {
       </div>
 
       <div className="mb-10">
-        <h1 className="text-4xl font-black text-slate-900 tracking-tighter uppercase italic">Configure New Event</h1>
+        <h1 className="text-4xl font-black text-slate-900 tracking-tighter uppercase">Configure New Event</h1>
         <p className="text-slate-500 font-bold uppercase text-[10px] tracking-[0.2em] mt-2">Initialize time-window and problem sets</p>
       </div>
 
@@ -220,7 +220,7 @@ export default function NewContestPage() {
             <div className="p-5 bg-slate-50 rounded-2xl border border-slate-100 flex items-center justify-between">
               <div>
                 <p className="text-[10px] font-black text-slate-400 uppercase mb-1">Contest Mode</p>
-                <p className="text-sm font-black text-slate-900 uppercase italic">ICPC Standard</p>
+                <p className="text-sm font-black text-slate-900 uppercase">ICPC Standard</p>
               </div>
               <BookOpen size={20} className="text-slate-300" />
             </div>

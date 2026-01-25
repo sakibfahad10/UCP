@@ -84,7 +84,7 @@ export default function AdminContestLobby() {
                 <Database size={12}/> v2.0.4
               </span>
             </div>
-            <h1 className="text-5xl md:text-6xl font-black italic uppercase tracking-tighter text-slate-900 leading-none">
+            <h1 className="text-5xl md:text-6xl font-black uppercase tracking-tighter text-slate-900 leading-none">
               Manage <span className="text-orange-500 underline decoration-slate-200">Arenas</span>
             </h1>
           </div>
@@ -117,11 +117,11 @@ export default function AdminContestLobby() {
                 <tr key={contest.id} className="hover:bg-slate-50/80 transition-colors group">
                   <td className="px-8 py-8">
                     <div className="flex items-center gap-4">
-                      <div className="w-12 h-12 bg-slate-100 rounded-2xl flex items-center justify-center text-slate-900 font-black italic text-sm group-hover:bg-orange-500 group-hover:text-white transition-all">
+                      <div className="w-12 h-12 bg-slate-100 rounded-2xl flex items-center justify-center text-slate-900 font-black text-sm group-hover:bg-orange-500 group-hover:text-white transition-all">
                         {contest.title.substring(0, 1)}
                       </div>
                       <div>
-                        <p className="text-sm font-black text-slate-900 uppercase italic tracking-tight">{contest.title}</p>
+                        <p className="text-sm font-black text-slate-900 uppercase tracking-tight">{contest.title}</p>
                         <p className="text-[9px] font-bold text-slate-400 uppercase tracking-widest mt-1">ID: {contest.id.substring(0, 8)}...</p>
                       </div>
                     </div>

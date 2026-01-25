@@ -86,7 +86,7 @@ export default function ContestStandingsPage() {
       <main className="max-w-7xl mx-auto px-6 py-12">
         <div className="mb-12 flex flex-col md:flex-row md:items-end justify-between gap-6">
           <div>
-            <h1 className="text-4xl font-black text-slate-900 uppercase italic tracking-tighter mb-2">Leaderboard</h1>
+            <h1 className="text-4xl font-black text-slate-900 uppercase tracking-tighter mb-2">Leaderboard</h1>
             <p className="text-slate-400 text-[10px] font-black uppercase tracking-[0.3em]">The elite matrix of performance and speed</p>
           </div>
           
@@ -119,7 +119,7 @@ export default function ContestStandingsPage() {
               <tbody className="divide-y divide-slate-50">
                 {standings.map((user: any, index: number) => (
                   <tr key={index} className="hover:bg-slate-50 transition-all font-medium">
-                    <td className="px-8 py-8 font-black text-slate-300 text-xl italic">
+                    <td className="px-8 py-8 font-black text-slate-300 text-xl">
                       #{index + 1}
                     </td>
                     <td className="px-6 py-8">
@@ -132,13 +132,13 @@ export default function ContestStandingsPage() {
                             </div>
                           )}
                           <div>
-                            <p className="text-sm font-black text-slate-900 uppercase italic leading-none">{user.name}</p>
+                            <p className="text-sm font-black text-slate-900 uppercase leading-none">{user.name}</p>
                             <p className="text-[9px] text-slate-400 font-bold uppercase tracking-widest mt-1">Certified Competitor</p>
                           </div>
                        </div>
                     </td>
                     <td className="px-6 py-8 text-center">
-                       <span className={`inline-block px-4 py-2 rounded-full text-[11px] font-black italic shadow-sm ${
+                       <span className={`inline-block px-4 py-2 rounded-full text-[11px] font-black shadow-sm ${
                          user.solved > 0 ? 'bg-emerald-500 text-white shadow-emerald-100' : 'bg-slate-100 text-slate-400'
                        }`}>
                          {user.solved} AC
@@ -157,7 +157,7 @@ export default function ContestStandingsPage() {
                                 ? 'bg-emerald-50 text-emerald-600 border border-emerald-100' 
                                 : 'bg-rose-50 text-rose-500 border border-rose-100'
                             }`}>
-                              <span className="text-xs font-black italic">
+                              <span className="text-xs font-black">
                                 {task.is_solved ? `+${task.wrong_attempts || ''}` : `-${task.wrong_attempts}`}
                               </span>
                               {task.is_solved && (
