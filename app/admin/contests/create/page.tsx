@@ -3,8 +3,8 @@
 import { useState } from "react"
 import { useRouter } from "next/navigation"
 import { createClient } from "@/lib/supabase/client"
-import { 
-  ArrowLeft, Save, Globe, Lock, 
+import {
+  ArrowLeft, Save, Globe, Lock,
   Calendar, Clock, BookOpen, Settings2,
   AlertCircle, Database
 } from "lucide-react"
@@ -12,6 +12,7 @@ import Link from "next/link"
 import { toast } from "sonner"
 // Assuming you created components/admin/problem-picker.tsx
 import ProblemPicker from "@/components/admin/problem-picker"
+import { localDatetimeStringToUTC } from "@/lib/date-utils"
 
 export default function NewContestPage() {
   const router = useRouter()
@@ -45,9 +46,17 @@ export default function NewContestPage() {
 
     setIsSubmitting(true)
 
+    const payload = {
+      ...formData,
+      start_time: localDatetimeStringToUTC(formData.start_time),
+      end_time: localDatetimeStringToUTC(formData.end_time),
+      registration_start_time: localDatetimeStringToUTC(formData.registration_start_time),
+      registration_end_time: localDatetimeStringToUTC(formData.registration_end_time),
+    }
+
     const { error } = await supabase
       .from("contests")
-      .insert([formData])
+      .insert([payload])
 
     if (error) {
       toast.error("Error creating contest: " + error.message)

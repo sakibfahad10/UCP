@@ -3,7 +3,7 @@
 import { useState, useEffect, useCallback } from "react"
 import { useParams, useRouter } from "next/navigation"
 import { createClient } from "@/lib/supabase/client"
-import { 
+import {
   ArrowLeft, Save, Globe,
   Calendar, Clock, BookOpen, Settings2,
   Database, Loader2
@@ -11,6 +11,7 @@ import {
 import Link from "next/link"
 import { toast } from "sonner"
 import ProblemPicker from "@/components/admin/problem-picker"
+import { utcToLocalDatetimeString, localDatetimeStringToUTC } from "@/lib/date-utils"
 
 export default function EditContestPage() {
   const { id } = useParams()
@@ -53,10 +54,10 @@ export default function EditContestPage() {
         setFormData({
           title: data.title || "",
           description: data.description || "",
-          start_time: data.start_time ? new Date(data.start_time).toISOString().slice(0, 16) : "",
-          end_time: data.end_time ? new Date(data.end_time).toISOString().slice(0, 16) : "",
-          registration_start_time: data.registration_start_time ? new Date(data.registration_start_time).toISOString().slice(0, 16) : "",
-          registration_end_time: data.registration_end_time ? new Date(data.registration_end_time).toISOString().slice(0, 16) : "",
+          start_time: utcToLocalDatetimeString(data.start_time),
+          end_time: utcToLocalDatetimeString(data.end_time),
+          registration_start_time: utcToLocalDatetimeString(data.registration_start_time),
+          registration_end_time: utcToLocalDatetimeString(data.registration_end_time),
           max_participants: data.max_participants || 0,
           allow_teams: data.allow_teams || false,
           // Ensure jsonb from database is treated as an array
@@ -88,14 +89,14 @@ export default function EditContestPage() {
       const updatePayload = {
         title: formData.title,
         description: formData.description,
-        start_time: new Date(formData.start_time).toISOString(),
-        end_time: new Date(formData.end_time).toISOString(),
-        registration_start_time: formData.registration_start_time ? new Date(formData.registration_start_time).toISOString() : null,
-        registration_end_time: formData.registration_end_time ? new Date(formData.registration_end_time).toISOString() : null,
+        start_time: localDatetimeStringToUTC(formData.start_time),
+        end_time: localDatetimeStringToUTC(formData.end_time),
+        registration_start_time: localDatetimeStringToUTC(formData.registration_start_time),
+        registration_end_time: localDatetimeStringToUTC(formData.registration_end_time),
         max_participants: formData.max_participants,
         allow_teams: formData.allow_teams,
         // Sending data for jsonb column
-        problems: formData.problems, 
+        problems: formData.problems,
         rules: formData.rules
       }
 
