@@ -55,9 +55,8 @@ export default function ContestsContent() {
   return (
     <div className="bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-7xl mx-auto">
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-          
-          <div className="lg:col-span-2">
+        <div>
+          <div>
             {/* Header */}
             <div className="mb-8">
               <div className="flex items-center gap-3 mb-4">
@@ -97,9 +96,9 @@ export default function ContestsContent() {
             </div>
 
             {/* Contest List */}
-            <div className="space-y-4">
+            <div className="flex flex-col gap-6">
               {filteredContests.length > 0 ? filteredContests.map((contest) => (
-                <Link href={`/contests/${contest.id}`} key={contest.id}>
+                <Link href={`/contests/${contest.id}`} key={contest.id} className="block">
                   <div className="bg-white rounded-[2rem] border border-gray-100 p-8 hover:shadow-2xl transition-all cursor-pointer group relative overflow-hidden">
                     <div className="absolute left-0 top-0 bottom-0 w-2 bg-orange-500"></div>
                     
@@ -135,26 +134,6 @@ export default function ContestsContent() {
               )}
             </div>
           </div>
-
-          {/* Sidebar */}
-          <div className="lg:col-span-1 space-y-6">
-            <div className="bg-slate-900 rounded-[2.5rem] p-8 text-white shadow-xl">
-              <h3 className="text-xl font-black italic uppercase mb-6 flex items-center gap-2">
-                <Trophy className="text-orange-500" size={20}/> Your Status
-              </h3>
-              <div className="space-y-4">
-                <div className="bg-white/5 p-4 rounded-2xl border border-white/10">
-                  <p className="text-[9px] font-black text-slate-400 uppercase tracking-widest mb-1">Global Rating</p>
-                  <p className="text-2xl font-black italic text-orange-500">1452 <span className="text-xs text-green-400">↑+24</span></p>
-                </div>
-                <div className="bg-white/5 p-4 rounded-2xl border border-white/10">
-                  <p className="text-[9px] font-black text-slate-400 uppercase tracking-widest mb-1">Solved Problems</p>
-                  <p className="text-2xl font-black italic">128</p>
-                </div>
-              </div>
-            </div>
-          </div>
-
         </div>
       </div>
     </div>
