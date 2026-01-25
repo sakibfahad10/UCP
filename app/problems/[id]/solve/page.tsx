@@ -11,7 +11,7 @@ import { executeCode } from "@/app/actions/execute-code"
 export default function VSCodeStyleIDE({ params }: { params: Promise<{ id: string }> }) {
   const { id: problemId } = use(params)
   const supabase = createClient()
-  
+
   const [problem, setProblem] = useState<any>(null)
   const [code, setCode] = useState("")
   const [language, setLanguage] = useState("cpp17")
@@ -45,51 +45,74 @@ export default function VSCodeStyleIDE({ params }: { params: Promise<{ id: strin
 
   const handleAction = async (isSubmit: boolean) => {
     if (!code.trim()) return toast.error("Code is empty!");
-    
+
     setIsJudging(true);
     setActiveTab("output");
-    
+
     try {
       const result = await executeCode(
-        code, 
-        language, 
-        isSubmit ? problemId : undefined, 
+        code,
+        language,
+        isSubmit ? problemId : undefined,
         undefined, // no contestId in global solve usually, unless we add it
-        isSubmit ? undefined : customInput 
+        isSubmit ? undefined : customInput
       );
 
       if (!result.success) {
         toast.error(result.output);
         return;
       }
-      
+
       // For Run mode (no verdict), just show output
       // For Submit mode, show verdict
       const displayStatus = result.verdict
-        ? (result.verdict === "AC" ? "Accepted" : 
-           result.verdict === "WA" ? "Wrong Answer" : 
-           result.verdict === "TLE" ? "Time Limit Exceeded" : 
-           result.verdict === "CE" ? "Compilation Error" : "Error")
+        ? (result.verdict === "AC" ? "Accepted" :
+          result.verdict === "WA" ? "Wrong Answer" :
+            result.verdict === "TLE" ? "Time Limit Exceeded" :
+              result.verdict === "CE" ? "Compilation Error" : "Error")
         : null; // No status for Run mode
 
-      setOutput({ 
-        output: result.output, 
-        cpuTime: result.cpuTime, 
-        memory: result.memory, 
-        displayStatus 
+      setOutput({
+        output: result.output,
+        cpuTime: result.cpuTime,
+        memory: result.memory,
+        displayStatus
       });
 
       if (isSubmit) {
-        result.verdict === "AC" 
-          ? toast.success("Submission Accepted!") 
+        // Save submission to database
+        const { data: { user } } = await supabase.auth.getUser();
+
+        if (user) {
+          const { error: submissionError } = await supabase
+            .from("submissions")
+            .insert({
+              user_id: user.id,
+              problem_id: problemId,
+              code: code,
+              language: language,
+              status: displayStatus,
+              execution_time: result.cpuTime || "0s",
+              // verdict column might not exist, relying on status
+            });
+
+          if (submissionError) {
+            console.error("Submission save error object:", JSON.stringify(submissionError, null, 2));
+            console.error("Submission save error message:", submissionError.message);
+            toast.error(`Failed to save submission history: ${submissionError.message || "Unknown error"}`);
+          }
+        }
+
+        result.verdict === "AC"
+          ? toast.success("Submission Accepted!")
           : toast.error(`Submission Failed: ${displayStatus}`);
       } else {
         toast.success("Code executed successfully!");
       }
-    } catch (e) { 
-      toast.error("Execution engine unreachable."); 
-    } finally { 
-      setIsJudging(false); 
+    } catch (e) {
+      toast.error("Execution engine unreachable.");
+    } finally {
+      setIsJudging(false);
     }
   };
 
@@ -109,10 +132,10 @@ export default function VSCodeStyleIDE({ params }: { params: Promise<{ id: strin
           <div className="flex-1 overflow-y-auto p-6 custom-scrollbar">
             <h1 className="text-xl font-bold text-white mb-2 tracking-tight">{problem?.title}</h1>
             <div className="flex gap-2 mb-6">
-                <span className="text-[9px] bg-emerald-500/10 text-emerald-400 px-2 py-0.5 rounded border border-emerald-500/20 font-black uppercase tracking-widest">Score: 10 PTS</span>
+              <span className="text-[9px] bg-emerald-500/10 text-emerald-400 px-2 py-0.5 rounded border border-emerald-500/20 font-black uppercase tracking-widest">Score: 10 PTS</span>
             </div>
             <p className="text-[#cccccc] text-sm leading-relaxed mb-6 font-light whitespace-pre-wrap">{problem?.statement}</p>
-            
+
             <div className="space-y-4 pt-4 border-t border-[#333333]">
               <div className="space-y-2">
                 <span className="text-[10px] font-bold text-[#569cd6] uppercase tracking-widest">Sample Input</span>
@@ -135,9 +158,9 @@ export default function VSCodeStyleIDE({ params }: { params: Promise<{ id: strin
                 <Code2 size={14} className="text-orange-400" />
                 <span className="text-xs text-white font-medium">solution.{language === 'python3' ? 'py' : 'cpp'}</span>
               </div>
-              <select 
+              <select
                 value={language}
-                onChange={(e) => {setLanguage(e.target.value); setDefaultCode(e.target.value)}}
+                onChange={(e) => { setLanguage(e.target.value); setDefaultCode(e.target.value) }}
                 className="bg-[#2d2d2d] border-none text-[11px] text-[#cccccc] outline-none rounded px-2 py-1 cursor-pointer hover:bg-[#3e3e3e]"
               >
                 <option value="cpp17">C++ 17</option>
@@ -189,7 +212,7 @@ export default function VSCodeStyleIDE({ params }: { params: Promise<{ id: strin
 
             <div className="flex-1 p-4 overflow-y-auto font-mono custom-scrollbar bg-[#121212]">
               {activeTab === "input" ? (
-                <textarea 
+                <textarea
                   value={customInput}
                   onChange={(e) => setCustomInput(e.target.value)}
                   className="w-full h-full bg-transparent border-none text-[#cccccc] text-xs outline-none resize-none placeholder:text-[#444444]"

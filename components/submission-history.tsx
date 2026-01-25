@@ -27,10 +27,10 @@ export default function SubmissionHistory({ userId }: { userId: string }) {
     // Real-time update listener
     const channel = supabase
       .channel("realtime-submissions")
-      .on("postgres_changes", { event: "INSERT", schema: "public", table: "submissions", filter: `user_id=eq.${userId}` }, 
-      (payload) => {
-        setSubmissions((prev) => [payload.new, ...prev])
-      })
+      .on("postgres_changes", { event: "INSERT", schema: "public", table: "submissions", filter: `user_id=eq.${userId}` },
+        (payload) => {
+          setSubmissions((prev) => [payload.new, ...prev])
+        })
       .subscribe()
 
     return () => { supabase.removeChannel(channel) }
@@ -62,9 +62,8 @@ export default function SubmissionHistory({ userId }: { userId: string }) {
             {submissions.map((sub) => (
               <tr key={sub.id} className="hover:bg-slate-50 transition-colors group">
                 <td className="px-6 py-4">
-                  <div className={`flex items-center gap-2 font-black text-xs uppercase ${
-                    sub.status === 'Accepted' ? 'text-green-500' : 'text-red-500'
-                  }`}>
+                  <div className={`flex items-center gap-2 font-black text-xs uppercase italic ${sub.status === 'Accepted' ? 'text-green-500' : 'text-red-500'
+                    }`}>
                     {sub.status === 'Accepted' ? <CheckCircle2 size={16} /> : <XCircle size={16} />}
                     {sub.status}
                   </div>
@@ -76,7 +75,7 @@ export default function SubmissionHistory({ userId }: { userId: string }) {
                   </span>
                 </td>
                 <td className="px-6 py-4 text-slate-400 font-bold text-xs">
-                  {sub.execution_time || "0ms"}
+                  {sub.runtime ? `${sub.runtime}s` : "0s"}
                 </td>
                 <td className="px-6 py-4 text-right text-slate-400 font-bold text-[10px] uppercase">
                   {formatDistanceToNow(new Date(sub.created_at), { addSuffix: true })}
@@ -85,7 +84,7 @@ export default function SubmissionHistory({ userId }: { userId: string }) {
             ))}
           </tbody>
         </table>
-        
+
         {submissions.length === 0 && (
           <div className="py-20 text-center">
             <Code2 className="mx-auto text-slate-200 mb-4" size={48} />
